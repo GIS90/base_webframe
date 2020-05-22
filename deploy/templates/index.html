@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block navbar %}
+<section class="content-header">
+    <h1>首页</h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> 当前位置</li>
+        <li class="active">首页</li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3 id="home_employ">0</h3>
+                        <p>员工总数</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3 id="home_count">0</h3>
+                        <p>统计时间</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-info"></i> 温馨提示</h4>
+            <ol>
+                <li>上班时间8：30，下班时间17：30，请勿迟到、早退、旷工。</li>
+                <li>温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示温馨提示</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function initPage() {
+        var jsInObj = null;
+        restTemplate("GET", "/home/summary/", jsInObj, function (jsOutObj) {
+            json_jsOutObj = JSON.parse(jsOutObj);
+            if(json_jsOutObj && json_jsOutObj["status_id"] == 100){
+                $("#home_employ").text(json_jsOutObj["data"]["employee_count"]);
+                $("#home_count").text(json_jsOutObj["data"]["cur_date"]);
+            }else {
+                $("#home_employ").text(0);
+                $("#home_count").text('系统错误，请联系管理员：mingliang.gao');
+            }
+        });
+    }
+</script>
+{% endblock %}

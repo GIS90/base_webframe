@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}信息管理{% endblock %}
+
+{% block navbar %}
+<section class="content-header">
+    <h1>浏览</h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> 当前位置</li>
+        <li class="active">信息管理</li>
+        <li class="active">新增</li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="box box-primary">
+    <ul id="info_" class="nav nav-pills nav-justified">
+
+        <li class="active"><a href="#baseinfo" data-toggle="tab">基本信息</a></li>
+        <li><a href="#idinfo" data-toggle="tab">证件信息</a></li>
+        <li><a href="#workref" data-toggle="tab">银行卡信息</a></li>
+        <li><a href="#workexp" data-toggle="tab">工作经历</a></li>
+        <li><a href="#family" data-toggle="tab">亲属信息</a></li>
+        <li><a href="#education" data-toggle="tab">教育经历</a></li>
+
+    </ul>
+
+    <form id='info_form' method='POST' enctype="multipart/form-data">
+
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function initPage() {
+    }
+</script>
+{% endblock %}
