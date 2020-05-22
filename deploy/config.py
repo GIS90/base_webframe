@@ -47,8 +47,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or 'belivemeIcanfly'
 MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.163.com'
 MAIL_PORT = int(os.environ.get('MAIL_PORT') or '25')
 MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL') == 'True'
-MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'gaoming971366@163.com'
-MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'gaoming971366@'
+MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'XXXXXX@163.com'
+MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'XXXXXX'
 
 # db(sqlalchemy)，default is mysql
 DB_LINK = "mysql+pymysql://mingliang.gao:910809ecb44c92db12ad5fa369375d00@212.64.61.62:3306/blog?charset=utf8"

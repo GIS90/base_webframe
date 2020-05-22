@@ -71,7 +71,7 @@ class WebFlaskServer(BaseClass):
             # manage: login apis
             if request.blueprint in ['api', 'manage', None]:
                 return
-            # special apis for blueprint
+            # special api for blueprints
             if request.endpoint.endswith('ForApi') or \
                     request.endpoint.endswith('for_api'):
                 return
