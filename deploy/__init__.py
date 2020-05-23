@@ -23,7 +23,7 @@ from flask import (Flask,
                    g,
                    request)
 
-from deploy.utils.base_class import BaseClass
+from deploy.utils.base_class import WebBaseClass
 from deploy.utils.logger import logger as LOG
 from deploy.utils.utils import get_user_id
 from deploy.views.employee import employee
@@ -37,7 +37,7 @@ from deploy.models.base import get_session
 app = Flask(__name__)
 
 
-class WebFlaskServer(BaseClass):
+class WebFlaskServer(WebBaseClass):
     app = None
     version = VERSION
     name = NAME

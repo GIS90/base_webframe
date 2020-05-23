@@ -20,18 +20,18 @@ base_info:
 import threading
 
 
-class BaseClass(object):
+class WebBaseClass(object):
 
     _instance = None
     _instance_lock = threading.Lock()
 
     def __init__(self):
-        super(BaseClass, self).__init__()
+        super(WebBaseClass, self).__init__()
         self.init_run()
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
-            with BaseClass._instance_lock:
+            with WebBaseClass._instance_lock:
                 cls._instance = object.__new__(cls)
         return cls._instance
 
@@ -39,3 +39,23 @@ class BaseClass(object):
         pass
 
 
+class AppBaseClass(object):
+
+    _instance = None
+    _instance_lock = threading.Lock()
+
+    def __init__(self):
+        super(AppBaseClass, self).__init__()
+        self.entry_point()
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            with AppBaseClass._instance_lock:
+                cls._instance = object.__new__(cls)
+        return cls._instance
+
+    def entry_point(self):
+        self.run()
+
+    def run(self):
+        pass

@@ -19,6 +19,7 @@
 > ### 安装包
 
   - pip install -r requirements.txt
+
 此程序运行于python2，其中requirements.txt项目所需要的包，已固定版本
 
 > ### supervisor
@@ -56,10 +57,8 @@ app.run(host="0.0.0.0", port=11111, debug=True)
 
 * ***Blog:*** http://pygo2.cn
 
-* ***WeChat:***
+* ***WeChat:*** PyGo90
 
-![](deploy/statics/images/wx.png)
 
-<font color=#1E90FF size=7 face="黑体">*** Enjoy the good lift everyday ！！！***</font>
+*** Enjoy the good lift everyday ！！！***
 
-![](deploy/statics/images/life.jpg)
