@@ -4,7 +4,12 @@
 """
 --------------------------------------------------------------
 describe:
+    the entry point of webframe
+    use gunicorn to start project(gunicorn -c etc/dev/gunicorn.conf wsgi:app) 
+    or directly execute  the file to start(python wsgi.py)
+    python version: python2
     
+    Enjoy the good lift everyday！！!
 
 base_info:
     __version__ = "v.10"

@@ -4,7 +4,7 @@
 """
 --------------------------------------------------------------
 describe:
-    
+    WebFlaskServer initialize 
 
 base_info:
     __version__ = "v.10"

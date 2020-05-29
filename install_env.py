@@ -12,9 +12,7 @@ base_info:
     __time__ = "2020/5/19 3:46 PM"
     __mail__ = "mingliang.gao@163.com"
     
-long description:
-is or python
-    
+long description: None
 --------------------------------------------------------------
 """
 

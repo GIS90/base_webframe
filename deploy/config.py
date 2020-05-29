@@ -4,7 +4,7 @@
 """
 --------------------------------------------------------------
 describe:
-    config
+    analyse to the config of yaml formatter
 
 base_info:
     __version__ = "v.10"

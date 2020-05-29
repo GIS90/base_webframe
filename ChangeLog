@@ -6,15 +6,3 @@ CHANGES
 * update README.md
 * delete backup setup.py config
 * first commit
-
-
-def __get_config(mode):
-    if mode not in ['dev', 'prod']:
-        return None
-
-    return os.path.join(os.path.dirname(os.path.realpath(__file__)), mode, 'config.py')
-
-mode = os.environ.get('mode') or 'dev'
-config_file = __get_config(mode)
-if not config_file:
-    os._exit(0)
