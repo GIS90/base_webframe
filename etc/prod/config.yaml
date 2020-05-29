@@ -1,0 +1,26 @@
+SERVER:
+  NAME: BaseWebFrame
+  VERSION: 1.0.0
+  DEBUG: True
+  SECRET_KEY: IbelivemeIcanfly
+
+
+LOG:
+  dir:
+  LOG_DIR: /home/mingliang.gao/py_project/base_webframe/log
+  LOG_LEVEL: debug
+  LOG_FORMATTER: '%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s - %(message)s'
+  LOG_FILENAME_PREFIX: base_webframe
+
+
+DB:
+  # db(sqlalchemy)，default is mysql
+  DB_LINK: mysql+pymysql://mingliang.gao:910809ecb44c92db12ad5fa369375d00@212.64.61.62:3306/blog?charset=utf8
+
+
+MAIL:
+  MAIL_SERVER: smtp.163.com
+  MAIL_PORT: 25
+  MAIL_USE_SSL: True
+  MAIL_USERNAME: XXXXXX@163.com
+  MAIL_PASSWORD: XXXXXX

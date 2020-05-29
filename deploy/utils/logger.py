@@ -64,7 +64,6 @@ import logging
 import os
 import sys
 from logging.handlers import RotatingFileHandler
-
 from deploy.config import LOG_DIR, LOG_LEVEL, LOG_FORMATTER, LOG_FILENAME_PREFIX
 
 LEVEL = {

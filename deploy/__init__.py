@@ -18,6 +18,7 @@ base_info:
 # usage: /usr/bin/python __init__.py.py
 # ------------------------------------------------------------
 import os
+import sys
 from flask import (Flask,
                    render_template,
                    g,
@@ -50,7 +51,7 @@ class WebFlaskServer(WebBaseClass):
         self.app = app
         if not self.app:
             LOG.info('Web server initialize is failure......')
-            os._exit(0)
+            sys.exit(1)
 
         _realpath = os.path.dirname(os.path.realpath(__file__))
         self.app.template_folder = _realpath + '/templates/'
@@ -115,5 +116,5 @@ class WebFlaskServer(WebBaseClass):
         LOG.info('Web server is running......')
 
 
-def create_app(config_file):
+def create_app():
     return WebFlaskServer(app).app

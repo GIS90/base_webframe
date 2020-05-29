@@ -16,14 +16,10 @@ base_info:
 # ------------------------------------------------------------
 # usage: /usr/bin/python wsgi.py
 # ------------------------------------------------------------
-import os
 from deploy import create_app
 
 
-config_file = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), 'deploy/config.py')
-
-app = create_app(config_file)
+app = create_app()
 
 # # 手动启动
 # app.run(host="0.0.0.0", port=11111, debug=True)

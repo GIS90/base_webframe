@@ -19,10 +19,11 @@ base_info:
 # ------------------------------------------------------------
 import os
 import sys
+import yaml
 import inspect
 import logging
 
-
+logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 
@@ -35,26 +36,80 @@ def _get_cur_folder():
         return os.path.abspath(cur_folder)
 
 
-base_dir = _get_cur_folder()
+# get current run config by mode
+def _get_config(mode):
+    if mode not in ['dev', 'prod']:
+        return None
+    return os.path.join((os.path.dirname(_get_cur_folder())), ('etc/' + mode + '/config.yaml'))
 
-# server
+
+# default log dir
+def __get_log_dir():
+    return os.path.join(os.path.dirname(_get_cur_folder()), 'log')
+
+
+"""
+default config
+"""
+# SERVER
 NAME = 'BaseWebFrame'
 VERSION = '1.0.0'
 DEBUG = True
-SECRET_KEY = os.environ.get('SECRET_KEY') or 'belivemeIcanfly'
+SECRET_KEY = 'belivemeIcanfly'
 
-# mail
-MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.163.com'
-MAIL_PORT = int(os.environ.get('MAIL_PORT') or '25')
-MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL') == 'True'
-MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'XXXXXX@163.com'
-MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'XXXXXX'
+# DB(sqlalchemy)，default is mysql
+DB_LINK = None
 
-# db(sqlalchemy)，default is mysql
-DB_LINK = "mysql+pymysql://mingliang.gao:910809ecb44c92db12ad5fa369375d00@212.64.61.62:3306/blog?charset=utf8"
-
-# log
-LOG_DIR = "/Users/gaomingliang/github/base_webframe/log"
+# LOG
+LOG_DIR = __get_log_dir()
 LOG_LEVEL = "debug"
 LOG_FORMATTER = "%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s - %(message)s"
 LOG_FILENAME_PREFIX = 'base_webframe'
+
+# mail
+MAIL_SERVER = None
+MAIL_PORT = None
+MAIL_USE_SSL = None
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+
+"""
+enrty: initializate config
+"""
+mode = os.environ.get('mode') or 'dev'
+_config_file = _get_config(mode)
+if not os.path.exists(_config_file):
+    logger.critical('====== config file is not exist, exit ======')
+    sys.exit(1)
+
+with open(_config_file) as f:
+    _config_info = yaml.safe_load(f)
+    if not _config_info:
+        logger.critical('====== config file is unavail, exit ======')
+        sys.exit(1)
+
+    # SERVER
+    NAME = _config_info['SERVER']['NAME'] or NAME
+    VERSION = _config_info['SERVER']['VERSION'] or VERSION
+    DEBUG = _config_info['SERVER']['DEBUG'] or DEBUG
+    SECRET_KEY = _config_info['SERVER']['SECRET_KEY'] or SECRET_KEY
+
+    # DB(sqlalchemy)，default is mysql
+    DB_LINK = _config_info['DB']['DB_LINK'] or DB_LINK
+
+    # LOG
+    LOG_DIR = _config_info['LOG']['LOG_DIR'] or LOG_DIR
+    if not os.path.exists(LOG_DIR):
+        logger.critical('====== log dir is not exist, exit ======')
+        sys.exit(1)
+    LOG_LEVEL = _config_info['LOG']['LOG_LEVEL'] or LOG_LEVEL
+    LOG_FORMATTER = _config_info['LOG']['LOG_FORMATTER'] or LOG_FORMATTER
+    LOG_FILENAME_PREFIX = _config_info['LOG']['LOG_FILENAME_PREFIX'] or LOG_FILENAME_PREFIX
+
+    # mail
+    MAIL_SERVER = _config_info['MAIL']['MAIL_SERVER'] or MAIL_SERVER
+    MAIL_PORT = int(_config_info['MAIL']['MAIL_PORT']) or MAIL_PORT
+    MAIL_USE_SSL = _config_info['MAIL']['MAIL_USE_SSL'] or MAIL_USE_SSL
+    MAIL_USERNAME = _config_info['MAIL']['MAIL_USERNAME'] or MAIL_USERNAME
+    MAIL_PASSWORD = _config_info['MAIL']['MAIL_PASSWORD'] or MAIL_PASSWORD
