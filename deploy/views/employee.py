@@ -15,11 +15,10 @@ base_info:
     __mail__ = "mingliang.gao@163.com"
 ------------------------------------------------
 """
-from flask import Blueprint, \
+from flask import Blueprint, g, \
     render_template, request
 
 from deploy.utils.logger import logger as LOG
-from deploy.utils.utils import get_cur_user
 from deploy.services.employee import EmployeeService
 from deploy.utils.status import Status
 
@@ -29,22 +28,16 @@ employee = Blueprint('employee', __name__)
 
 @employee.route('/employee/add/')
 def html_add():
-    menu = dict()
-    menu['f'] = 'info'
-    menu['sub'] = 'add'
-    return render_template('employee/add.html',
-                           current_user=get_cur_user(),
-                           menu=menu)
+    g.menuf = 'info'
+    g.menusub = 'add'
+    return render_template('employee/add.html')
 
 
 @employee.route('/employee/list/')
 def html_list():
-    menu = dict()
-    menu['f'] = 'info'
-    menu['sub'] = 'list'
-    return render_template('employee/list.html',
-                           current_user=get_cur_user(),
-                           menu=menu)
+    g.menuf = 'info'
+    g.menusub = 'list'
+    return render_template('employee/list.html')
 
 
 @employee.route('/employee/api_list/', methods=['GET', 'POST'])
@@ -64,12 +57,9 @@ def api_list_all():
 
 @employee.route('/employee/edit/')
 def html_edit():
-    menu = dict()
-    menu['f'] = 'info'
-    menu['sub'] = 'edit'
-    return render_template('employee/edit.html',
-                           current_user=get_cur_user(),
-                           menu=menu)
+    g.menuf = 'info'
+    g.menusub = 'edit'
+    return render_template('employee/edit.html')
 
 
 

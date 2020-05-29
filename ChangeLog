@@ -1,6 +1,10 @@
 CHANGES
 =======
 
+* set favicon
+* important file add note
+* README.md update
+* add dev/prod config.yaml
 * console\_scripts update
 * add AppBaseClass && add setup.cfg console\_scripts
 * update README.md

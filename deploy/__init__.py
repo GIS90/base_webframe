@@ -22,6 +22,8 @@ import sys
 from flask import (Flask,
                    render_template,
                    jsonify,
+                   redirect,
+                   url_for,
                    g,
                    request)
 
@@ -34,7 +36,7 @@ from deploy.views.manage import manage
 from deploy.views.home import home
 from deploy.config import VERSION, NAME, SECRET_KEY
 from deploy.models.base import get_session
-
+from deploy.services.user import UserService
 
 app = Flask(__name__)
 
@@ -78,7 +80,7 @@ class WebFlaskServer(WebBaseClass):
                     request.endpoint.endswith('for_api'):
                 return
 
-            return render_template("login.html")
+            return redirect(url_for('manage.index'))
 
         @self.app.before_first_request
         def before_first_request():
@@ -94,9 +96,19 @@ class WebFlaskServer(WebBaseClass):
             LOG.error("%s is server error 500" % request.url)
             return render_template('errors/500.html'), 500
 
-        # @self.app.context_processor
-        # def default_context_processor():
-        #     pass
+        @self.app.context_processor
+        def default_context_processor():
+            user_id = get_user_id()
+            if user_id:
+                current_user = UserService().get_user_by_params(user_id)
+                menu = dict()
+                menu['f'] = g.menuf
+                menu['sub'] = g.menusub
+                return {
+                    'current_user': current_user,
+                    'version': VERSION,
+                    'menu': menu
+                }
 
         # set favicon
         @self.app.route('/favicon.ico')

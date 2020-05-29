@@ -15,9 +15,13 @@ base_info:
     __mail__ = "mingliang.gao@163.com"
 ------------------------------------------------
 """
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, g,\
+    render_template, request, session
+
 from deploy.utils.logger import logger as LOG
-from deploy.utils.utils import is_login_ok, check_login, get_cur_user
+from deploy.utils.utils import (is_login_ok,
+                                check_login,
+                                get_user_id)
 from deploy.services.user import UserService
 
 
@@ -27,16 +31,15 @@ manage = Blueprint('manage', __name__)
 @manage.route('/', methods=['GET', 'POST'])
 @is_login_ok
 def index():
-    menu = dict()
-    user_id = session.get('user_id')
+    user_id = get_user_id()
     if not user_id:
         return render_template("login.html",
                                login_message="")
-    user = UserService().get_user_by_params(user_id)
+
+    g.menuf = 'index'
+    g.menusub = 'index'
     return render_template("index.html",
-                           login_message="已存在登录信息",
-                           current_user=user,
-                           menu=menu)
+                           login_message="已存在登录信息")
 
 
 @manage.route('/login/', methods=['GET', 'POST'])
@@ -48,9 +51,9 @@ def login_in():
             return render_template("login.html",
                                    login_message="")
 
-        return render_template("index.html",
-                               current_user=get_cur_user(),
-                               menu=menu)
+        g.menuf = 'index'
+        g.menusub = 'index'
+        return render_template("index.html")
     elif request.method == 'POST':
         form = request.form
         user_id = form.get('login_user')
@@ -64,14 +67,13 @@ def login_in():
             return render_template("login.html",
                                    login_message='账号密码不匹配')
         session['user_id'] = user_id
+        g.menuf = 'index'
+        g.menusub = 'index'
         return render_template("index.html",
-                               login_message="登录成功",
-                               current_user=user,
-                               menu=menu)
+                               login_message="登录成功")
     else:
         return render_template("login.html",
-                               login_message="",
-                               current_user=get_cur_user())
+                               login_message="")
 
 
 @manage.route('/logout/', methods=['GET', 'POST'])

@@ -15,7 +15,7 @@ base_info:
     __mail__ = "mingliang.gao@163.com"
 ------------------------------------------------
 """
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, jsonify, make_response, request, abort
 from deploy.utils.logger import logger as LOG
 
 tasks = Blueprint('tasks', __name__)

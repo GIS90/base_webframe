@@ -22,12 +22,34 @@ class UserService(object):
     def __init__(self):
         super(UserService, self).__init__()
         self.user_bo = UserBo()
+        self.attrs = ['id', 'rtx_id', 'fullname',
+                      'password', 'email', 'phone', 'is_admin']
 
     def get_user_by_params(self, user_id):
+        user_res = dict()
+
         if not user_id:
-            return None
+            return user_res
+
         user = self.user_bo.get_user_by_params(user_id)
-        return user
+        if user:
+            for attr in self.attrs:
+                if attr == 'id':
+                    user_res[attr] = user.id
+                elif attr == 'rtx_id':
+                    user_res[attr] = user.rtx_id
+                elif attr == 'fullname':
+                    user_res[attr] = user.fullname
+                elif attr == 'password':
+                    user_res[attr] = user.password
+                elif attr == 'email':
+                    user_res[attr] = user.email
+                elif attr == 'phone':
+                    user_res[attr] = user.phone
+                elif attr == 'is_admin':
+                    user_res[attr] = user.is_admin
+
+        return user_res
 
     def check_user(self, user_id, password):
         if not user_id or not password:

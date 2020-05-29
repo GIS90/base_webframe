@@ -55,8 +55,8 @@
                                 <img src="{{ url_for('static', filename='images/avatar.jpg') }}"
                                      class="img-circle" alt="User Image">
                                 <p>
-                                    <span>{{current_user.fullname}}</span>
-                                    <small>{{current_user.email}}</small>
+                                    <span>{{ current_user.fullname }}</span>
+                                    <small>{{ current_user.email }}</small>
                                 </p>
                             </li>
                             <li class="user-footer">
@@ -78,7 +78,7 @@
         <section class="sidebar">
             <ul class="sidebar-menu">
                 <li class="header">功能导航</li>
-                <li>
+                <li class="{% if menu.f == 'index' %}active{% else %}{% endif %}">
                     <a href="{{ url_for('manage.index') }}">
                         <i class="fa fa-home"></i>
                         <span>首页</span>
@@ -121,7 +121,7 @@
     <!--页脚-->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>版本号</b> 1.0.0
+            <b>版本号</b> {{ version }}
         </div>
         Copyright &copy; 2019 <a href="http://212.64.61.62/" target="_blank">PyGo²</a>
     </footer>
