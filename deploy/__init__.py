@@ -21,6 +21,7 @@ import os
 import sys
 from flask import (Flask,
                    render_template,
+                   jsonify,
                    g,
                    request)
 
@@ -31,7 +32,7 @@ from deploy.views.employee import employee
 from deploy.views.tasks import tasks
 from deploy.views.manage import manage
 from deploy.views.home import home
-from deploy.config import VERSION, NAME
+from deploy.config import VERSION, NAME, SECRET_KEY
 from deploy.models.base import get_session
 
 
@@ -55,11 +56,11 @@ class WebFlaskServer(WebBaseClass):
 
         _realpath = os.path.dirname(os.path.realpath(__file__))
         self.app.template_folder = _realpath + '/templates/'
-        self.app.secret_key = 'xiangxinzijicanfly'
-        self.app.static_folder = _realpath + '/statics'
-        self.app.static_url_path = '/statics'
+        self.app.secret_key = SECRET_KEY
+        self.app.static_folder = _realpath + '/static'
+        self.app.static_url_path = '/static'
         self.app.add_url_rule(self.app.static_url_path + '/<path:filename>',
-                              endpoint='statics',
+                              endpoint='static',
                               view_func=self.app.send_static_file)
 
         super(WebFlaskServer, self).__init__()
@@ -92,6 +93,15 @@ class WebFlaskServer(WebBaseClass):
         def server_error(error):
             LOG.error("%s is server error 500" % request.url)
             return render_template('errors/500.html'), 500
+
+        # @self.app.context_processor
+        # def default_context_processor():
+        #     pass
+
+        # set favicon
+        @self.app.route('/favicon.ico')
+        def get_defaule_favicon():
+            return self.app.send_static_file('images/favicon.ico')
 
     def register_blueprint(self, obj_n, obj):
         """

@@ -1,14 +1,14 @@
 SERVER:
   NAME: BaseWebFrame
   VERSION: 1.0.0
-  DEBUG: True
+  DEBUG: False
   SECRET_KEY: IbelivemeIcanfly
 
 
 LOG:
   dir:
   LOG_DIR: /home/mingliang.gao/py_project/base_webframe/log
-  LOG_LEVEL: debug
+  LOG_LEVEL: info
   LOG_FORMATTER: '%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s - %(message)s'
   LOG_FILENAME_PREFIX: base_webframe
 

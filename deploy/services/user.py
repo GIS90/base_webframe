@@ -23,7 +23,6 @@ class UserService(object):
         super(UserService, self).__init__()
         self.user_bo = UserBo()
 
-
     def get_user_by_params(self, user_id):
         if not user_id:
             return None

@@ -75,5 +75,4 @@ app.run(host="0.0.0.0", port=11111, debug=True)
 * ***WeChat:*** PyGo90
 
 
-Enjoy the good lift everyday！！!
-欢迎大家跟我一起来完善这个脚手架！！!
+Enjoy the good lift everyday！欢迎大家跟我一起来完善这个脚手架！！
