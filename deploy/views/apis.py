@@ -15,10 +15,11 @@ base_info:
     __mail__ = "mingliang.gao@163.com"
 ------------------------------------------------
 """
-from flask import Blueprint, jsonify, make_response, request, abort
+from flask import Blueprint, jsonify, \
+    make_response, request, abort
 from deploy.utils.logger import logger as LOG
 
-tasks = Blueprint('tasks', __name__)
+apis = Blueprint('apis', __name__)
 
 
 results = [
@@ -37,7 +38,7 @@ results = [
 ]
 
 
-@tasks.route('/tasks/show/<string:tid>', methods=['GET'])
+@apis.route('/apis/show/<string:tid>', methods=['GET'])
 def show_task(tid):
     if request.method != "GET":
         return jsonify({'status': 0, 'msg': u'show请求方法不为get方法', 'code': 4042})
@@ -52,7 +53,7 @@ def show_task(tid):
         return abort(404)
 
 
-@tasks.route('/tasks/create', methods=['GET', 'POST'])
+@apis.route('/apis/create', methods=['GET', 'POST'])
 def create_task():
     if request.method != 'POST':
         return jsonify({'status': 0, 'msg': u'show请求方法不为get方法', 'code': 4042})
@@ -74,7 +75,7 @@ def create_task():
     return jsonify({'status': 0, 'msg': u'create add success', 'code': 0})
 
 
-@tasks.errorhandler(404)
+@apis.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'status': 0, 'msg': u'task不存在', 'code': 404}))
 

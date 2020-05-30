@@ -133,7 +133,7 @@ class WebFlaskServer(WebBaseClass):
 
     def _autoinit_register_blueprint(self):
         self.register_blueprint('employee', employee)
-        self.register_blueprint('tasks', tasks)
+        self.register_blueprint('apis', apis)
         self.register_blueprint('manage', manage)
         self.register_blueprint('home', home)
 
