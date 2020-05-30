@@ -51,8 +51,24 @@ def api_list_all():
                 ).json()
 
     json = request.get_json()
-    result = EmployeeService().get_all(json)
-    return result
+    all_empls, count = EmployeeService().get_all(json)
+    data = dict()
+    data['totalCount'] = count
+    data['datalist'] = all_empls
+    LOG.info('/employee/api_list: %s' % count)
+    if not all_empls:
+        return Status(
+                101,
+                'success',
+                u'成功，但数据为空',
+                data
+                ).json()
+    return Status(
+                100,
+                'success',
+                u'成功',
+                data
+                ).json()
 
 
 @employee.route('/employee/edit/')

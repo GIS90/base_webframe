@@ -33,7 +33,7 @@
     <header class="main-header">
         <a href="{{ url_for('manage.index') }}" class="logo">
             <span class="logo-mini"><b>M</b></span>
-            <span class="logo-lg"><b>系统管理平台</b></span>
+            <span class="logo-lg"><b>员工信息管理平台</b></span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -91,9 +91,9 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{% if menu.sub == 'add' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_add') }}"><i class="fa fa-circle-o"></i> 新增</a></li>
-                        <li class="{% if menu.sub == 'list' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_list') }}"><i class="fa fa-circle-o"></i> 浏览</a></li>
-                        <li class="{% if menu.sub == 'edit' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_edit') }}"><i class="fa fa-circle-o"></i> 编辑</a></li>
+                        <li class="{% if menu.sub == 'add' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_add') }}"><i class="fa {% if menu.sub == 'add' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 新增</a></li>
+                        <li class="{% if menu.sub == 'list' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_list') }}"><i class="fa {% if menu.sub == 'list' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 浏览</a></li>
+                        <li class="{% if menu.sub == 'edit' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_edit') }}"><i class="fa {% if menu.sub == 'edit' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 编辑</a></li>
                     </ul>
                 </li>
                 <li class="{% if menu.f == 'set' %}treeview active{% else %}treeview{% endif %}">
@@ -103,7 +103,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href=""><i class="fa fa-circle-o"></i> 用户信息</a></li>
+
                     </ul>
                 </li>
             </ul>
@@ -121,7 +121,7 @@
     <!--页脚-->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>版本号</b> {{ version }}
+            <b>版本号</b> {{ sysversion }}
         </div>
         Copyright &copy; 2019 <a href="http://212.64.61.62/" target="_blank">PyGo²</a>
     </footer>

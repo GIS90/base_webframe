@@ -26,5 +26,5 @@ from deploy import create_app
 
 app = create_app()
 
-# # 手动启动
-# app.run(host="0.0.0.0", port=11111, debug=True)
+# 手动启动
+app.run(host="0.0.0.0", port=11111, debug=True)

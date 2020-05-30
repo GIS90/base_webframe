@@ -1,19 +1,83 @@
-{% extends "base.html" %}
-{% block title %}HTTP错误 - 404{% endblock %}
-{% block navtitle %}HTTP错误 - 404{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>500</title>
+    <style>
+        html { box-sizing: border-box; }
 
-{% block content %}
-<div class="box box-primary">
-    <div class="box-header with-border"></div>
-    <div class="box-body">
-        <div class="callout callout-info">
-            <h1><i class="icon fa fa-info"></i> 错误代码 - 404</h1>
-            <p>&nbsp;</p>
-            <h3>页面未找到</h3>
-        </div>
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        body * {
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font: normal 100%/1.15 "Merriweather", serif;
+          background-color: #7ed0f2;
+          color: #fff;
+        }
+
+        .wrapper {
+          position: relative;
+          max-width: 1298px;
+          height: auto;
+          margin: 2em auto 0 auto;
+        }
+
+        .box {
+          max-width: 70%;
+          margin: 0 auto;
+          padding: 1em 1em;
+          text-align: center;
+          background: url("server.png") no-repeat top 16em center/128px 128px;
+        }
+
+        h1, p:not(:last-of-type) {
+            text-shadow: 0 0 6px #216f79;
+        }
+
+        h1 {
+          margin: 0 0 1rem 0;
+          font-size: 14em;
+        }
+
+        p {
+          margin-bottom: 0.5em;
+          font-size: 5em;
+        }
+
+        p:first-of-type {
+            margin-top: 1.5em;
+        }
+
+        p > a {
+          border-bottom: 3px dashed #216f79;
+          font-style: italic;
+          text-decoration: none;
+          color: #216f79;
+        }
+
+        p > a:hover {
+            text-shadow: 0 0 12px #216f79;
+        }
+
+        p img { vertical-align: bottom; }
+    </style>
+</head>
+<body>
+     <div class="wrapper">
+    <div class="box">
+    <h1>404</h1>
+    <p>Sorry, Not found.</p>
+    <p>&#58;&#40;</p>
+    <p><a href="/">Let me try again!</a></p>
     </div>
-    <div class="box-footer">
-        <a class="btn btn-primary" href="{{url_for('main.index')}}">返回首页</a>
     </div>
-</div>
-{% endblock%}
+</body>
+</html>

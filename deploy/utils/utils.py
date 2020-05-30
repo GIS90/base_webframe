@@ -104,7 +104,7 @@ def is_login_ok(fn):
     def _wrapper(*args, **kwargs):
         user_id = get_user_id()
         if not user_id:
-            return render_template("login.html")
+            return render_template("login.html", login_message="")
         result = fn(*args, **kwargs)
         return result
 

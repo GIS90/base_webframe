@@ -21,7 +21,7 @@ import os
 import sys
 from flask import (Flask,
                    render_template,
-                   jsonify,
+                   session,
                    redirect,
                    url_for,
                    g,
@@ -37,6 +37,7 @@ from deploy.views.home import home
 from deploy.config import VERSION, NAME, SECRET_KEY
 from deploy.models.base import get_session
 from deploy.services.user import UserService
+
 
 app = Flask(__name__)
 
@@ -58,7 +59,7 @@ class WebFlaskServer(WebBaseClass):
 
         _realpath = os.path.dirname(os.path.realpath(__file__))
         self.app.template_folder = _realpath + '/templates/'
-        self.app.secret_key = SECRET_KEY
+        self.app.secret_key = SECRET_KEY or 'python'
         self.app.static_folder = _realpath + '/static'
         self.app.static_url_path = '/static'
         self.app.add_url_rule(self.app.static_url_path + '/<path:filename>',
@@ -98,7 +99,7 @@ class WebFlaskServer(WebBaseClass):
 
         @self.app.context_processor
         def default_context_processor():
-            user_id = get_user_id()
+            user_id = session.get('user_id')
             if user_id:
                 current_user = UserService().get_user_by_params(user_id)
                 menu = dict()
@@ -106,9 +107,13 @@ class WebFlaskServer(WebBaseClass):
                 menu['sub'] = g.menusub
                 return {
                     'current_user': current_user,
-                    'version': VERSION,
+                    'sysversion': VERSION,
                     'menu': menu
                 }
+
+            return {
+                'sysversion': VERSION
+            }
 
         # set favicon
         @self.app.route('/favicon.ico')

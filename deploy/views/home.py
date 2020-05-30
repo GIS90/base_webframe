@@ -23,7 +23,6 @@ from deploy.utils.status import Status
 
 from deploy.services.employee import EmployeeService
 
-
 home = Blueprint('home', __name__)
 
 
@@ -32,15 +31,8 @@ def summary():
     cur_date = get_now(format="%Y-%m-%d")
     employee_count = EmployeeService().get_count()
     return Status(100,
-                 'success',
-                 u'成功',
-                 {'cur_date': cur_date,
-                  'employee_count': employee_count
-                  }).json()
-
-
-
-
-
-
-
+                  'success',
+                  u'成功',
+                  {'cur_date': cur_date,
+                   'employee_count': employee_count
+                   }).json()

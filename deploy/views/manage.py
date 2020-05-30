@@ -16,7 +16,8 @@ base_info:
 ------------------------------------------------
 """
 from flask import Blueprint, g,\
-    render_template, request, session
+    render_template, request, \
+    session, redirect, url_for
 
 from deploy.utils.logger import logger as LOG
 from deploy.utils.utils import (is_login_ok,
@@ -38,13 +39,11 @@ def index():
 
     g.menuf = 'index'
     g.menusub = 'index'
-    return render_template("index.html",
-                           login_message="已存在登录信息")
+    return render_template("index.html")
 
 
 @manage.route('/login/', methods=['GET', 'POST'])
 def login_in():
-    menu = dict()
     if request.method == 'GET':
         is_ok, message = check_login()
         if not is_ok:
@@ -69,8 +68,8 @@ def login_in():
         session['user_id'] = user_id
         g.menuf = 'index'
         g.menusub = 'index'
-        return render_template("index.html",
-                               login_message="登录成功")
+        LOG.info('%s login in ==========' % user_id)
+        return render_template("index.html")
     else:
         return render_template("login.html",
                                login_message="")
@@ -78,11 +77,8 @@ def login_in():
 
 @manage.route('/logout/', methods=['GET', 'POST'])
 def login_out():
+    user_id = get_user_id()
+    if user_id:
+        LOG.info('%s login out ==========' % user_id)
     session.clear()
-    return render_template("login.html",
-                           login_message="")
-
-
-
-
-
+    return redirect(url_for('manage.index'))

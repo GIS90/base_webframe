@@ -76,14 +76,7 @@ class EmployeeService(object):
         # new_args['start'] = start
         all_empls, count = self.employee_bo.get_all(new_args)
         if not all_empls:
-            data['totalCount'] = 0
-            data['datalist'] = []
-            return Status(
-                    101,
-                    'success',
-                    u'成功，但数据为空',
-                    data
-                    ).json()
+            return [], 0
 
         results = list()
         for empl in all_empls:
@@ -121,14 +114,8 @@ class EmployeeService(object):
 
             start += 1
             results.append(result)
-        data['totalCount'] = count
-        data['datalist'] = results
-        return Status(
-                    100,
-                    'success',
-                    u'成功',
-                    data
-                    ).json()
+
+        return results, count
 
 
 
