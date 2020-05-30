@@ -24,11 +24,11 @@ from sqlalchemy import (
 from deploy.models import base
 
 
-__all__ = ("UserModel")
+__all__ = ("SysUserModel")
 
 
-class UserModel(base.ModelBase):
-    __tablename__ = 'user'
+class SysUserModel(base.ModelBase):
+    __tablename__ = 'sysuser'
 
     id = Column(Integer, primary_key=True)
     rtx_id = Column(String(50))

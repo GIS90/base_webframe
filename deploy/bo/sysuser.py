@@ -16,32 +16,32 @@ base_info:
 ------------------------------------------------
 """
 from deploy.bo.bo_base import BOBase
-from deploy.models.user import UserModel
+from deploy.models.sysuser import SysUserModel
 from sqlalchemy import or_
 
 
-class UserBo(BOBase):
+class SysUserBo(BOBase):
 
     def __init__(self):
-        super(UserBo, self).__init__()
+        super(SysUserBo, self).__init__()
 
     def get_user_by_params(self, user_id):
-        q = self.session.query(UserModel)
+        q = self.session.query(SysUserModel)
         if not user_id:
             return None
         if user_id:
-            q = q.filter(or_(UserModel.rtx_id == user_id,
-                             UserModel.email == user_id,
-                             UserModel.phone == user_id))
+            q = q.filter(or_(SysUserModel.rtx_id == user_id,
+                             SysUserModel.email == user_id,
+                             SysUserModel.phone == user_id))
             return q.first()
 
     def check_user(self, user_id, password):
         if not user_id or not password:
             return None
 
-        q = self.session.query(UserModel)
-        q = q.filter(or_(UserModel.rtx_id == user_id,
-                             UserModel.email == user_id,
-                             UserModel.phone == user_id))
-        q = q.filter(UserModel.password == password)
+        q = self.session.query(SysUserModel)
+        q = q.filter(or_(SysUserModel.rtx_id == user_id,
+                         SysUserModel.email == user_id,
+                         SysUserModel.phone == user_id))
+        q = q.filter(SysUserModel.password == password)
         return q.first()

@@ -18,7 +18,7 @@ base_info:
 
 """
 -- create user
-CREATE TABLE `blog`.`user` (
+CREATE TABLE `blog`.`sysuser` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`rtx_id` varchar(30),
 	`fullname` varchar(50),
@@ -30,7 +30,7 @@ CREATE TABLE `blog`.`user` (
 ) COMMENT='';
 
 -- insert user
-insert into blog.user(rtx_id, fullname,password,email ,phone,is_admin) 
+insert into blog.sysuser(rtx_id, fullname,password,email ,phone,is_admin) 
 VALUES('admin', '系统管理员', '1', 'xxxxxx@163.com', '13011112222', 1);
 
 

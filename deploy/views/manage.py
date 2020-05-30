@@ -23,7 +23,7 @@ from deploy.utils.logger import logger as LOG
 from deploy.utils.utils import (is_login_ok,
                                 check_login,
                                 get_user_id)
-from deploy.services.user import UserService
+from deploy.services.sysuser import SysUserService
 
 
 manage = Blueprint('manage', __name__)
@@ -57,11 +57,11 @@ def login_in():
         form = request.form
         user_id = form.get('login_user')
         user_pwd = form.get('login_password')
-        is_register_user = UserService().get_user_by_params(user_id)
+        is_register_user = SysUserService().get_user_by_params(user_id)
         if not is_register_user:
             return render_template("login.html",
                                    login_message='账户未注册')
-        user = UserService().check_user(user_id, user_pwd)
+        user = SysUserService().check_user(user_id, user_pwd)
         if not user:
             return render_template("login.html",
                                    login_message='账号密码不匹配')

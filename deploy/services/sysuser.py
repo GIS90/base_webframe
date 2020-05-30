@@ -15,13 +15,13 @@ base_info:
     __mail__ = "mingliang.gao@163.com"
 ------------------------------------------------
 """
-from deploy.bo.user import UserBo
+from deploy.bo.sysuser import SysUserBo
 
 
-class UserService(object):
+class SysUserService(object):
     def __init__(self):
-        super(UserService, self).__init__()
-        self.user_bo = UserBo()
+        super(SysUserService, self).__init__()
+        self.sysuser_bo = SysUserBo()
         self.attrs = ['id', 'rtx_id', 'fullname',
                       'password', 'email', 'phone', 'is_admin']
 
@@ -31,7 +31,7 @@ class UserService(object):
         if not user_id:
             return user_res
 
-        user = self.user_bo.get_user_by_params(user_id)
+        user = self.sysuser_bo.get_user_by_params(user_id)
         if user:
             for attr in self.attrs:
                 if attr == 'id':
@@ -54,7 +54,7 @@ class UserService(object):
     def check_user(self, user_id, password):
         if not user_id or not password:
             return None
-        user = self.user_bo.check_user(user_id, password)
+        user = self.sysuser_bo.check_user(user_id, password)
         return user if user else False
 
 

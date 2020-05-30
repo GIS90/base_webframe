@@ -24,7 +24,7 @@ from datetime import datetime
 from functools import wraps
 from flask import session, render_template
 from deploy.utils.status import Status
-from deploy.services.user import UserService
+from deploy.services.sysuser import SysUserService
 
 
 # get current folder, solve is or not frozen of the script
@@ -128,7 +128,7 @@ def get_cur_user():
     if not user_id:
         return render_template("login.html",
                                login_message="")
-    user = UserService().get_user_by_params(user_id)
+    user = SysUserService().get_user_by_params(user_id)
     if not user:
         return render_template("login.html",
                                login_message='')
