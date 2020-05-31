@@ -56,9 +56,3 @@ class SysUserService(object):
             return None
         user = self.sysuser_bo.check_user(user_id, password)
         return user if user else False
-
-
-
-
-
-

@@ -4,7 +4,9 @@
 
 {% block navbar %}
 <section class="content-header">
-    <h1>浏览</h1>
+        <h1 style="float:left">新增</h1>
+        <div style="margin-left: 4em;margin-top: 0.2em;">(<span style="color: red;">*</span> 为必填信息)</div>
+
     <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> 当前位置</li>
         <li class="active">信息管理</li>
@@ -18,17 +20,272 @@
     <ul id="info_" class="nav nav-pills nav-justified">
 
         <li class="active"><a href="#baseinfo" data-toggle="tab">基本信息</a></li>
-        <li><a href="#idinfo" data-toggle="tab">证件信息</a></li>
-        <li><a href="#workref" data-toggle="tab">银行卡信息</a></li>
+        <li><a href="#bankcard" data-toggle="tab">银行卡信息</a></li>
+        <!--
         <li><a href="#workexp" data-toggle="tab">工作经历</a></li>
         <li><a href="#family" data-toggle="tab">亲属信息</a></li>
         <li><a href="#education" data-toggle="tab">教育经历</a></li>
+        -->
 
     </ul>
 
-    <form id='info_form' method='POST' enctype="multipart/form-data">
+    <form id='info_form' action="/employee/add_api" method='POST' enctype="multipart/form-data">
+        <div id="myTabContent" class="tab-content main">
+            <!-- 基本信息 -->
+            <div class="tab-pane fade in active" id="baseinfo">
+                <div class='row info_main_tab'>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em;'><span class='info_red'>* </span>中文姓名 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='china_name' maxlength='20' class="info_input"
+                                   value='{{ em_profile.china_name or '' }}'
+                                   required='required' placeholder='身份证姓名'
+                            />
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em;'>英文姓名 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='english_name' maxlength='20' class="info_input"
+                                   value='{{ em_profile.english_name or '' }}'
+                            />
+                        </span>
+                    </div>
+                </div>
+                <div class='row info_main_tab'>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em;'><span class='info_red'>* </span>电&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp话 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='phone' maxlength='20' class="info_input"
+                                   value='{{ em_profile.phone or '' }}'
+                                   required='required'
+                            />
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em;'>邮&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp箱 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='email' maxlength='20' class="info_input"
+                                   value='{{ em_profile.email or '' }}'
+                            />
+                        </span>
+                    </div>
+                </div>
+                <div class='row info_main_tab'>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em'><span class='info_red'>* </span>性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="sex" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('sex') %}
+                                    <option value='{{item}}'>{{enums['sex'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>民&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp族 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="nation" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('nation') %}
+                                    <option value='{{item}}'>{{enums['nation'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>出生日期 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="date" required="required"
+                                   class="info_input" name="birth_date"
+                                   value='{{ em_profile.birth_date or '' }}'/>
+                        </span>
+                    </div>
+                </div>
+                <div class="row info_main_tab">
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em'><span class='info_red'>* </span>政治面貌 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="political_status" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('political_status') %}
+                                    <option value='{{item}}'>{{enums['political_status'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>国&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp籍 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="nationality" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('nationality') %}
+                                    <option value='{{item}}'>{{enums['nationality'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>户口类型 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="residence_type" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('residence_type') %}
+                                    <option value='{{item}}'>{{enums['residence_type'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="row info_main_tab">
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em'><span class='info_red'>* </span>婚姻状况 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="marriage" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('marriage') %}
+                                    <option value='{{item}}'>{{enums['marriage'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>教育程度 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="education" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('education') %}
+                                    <option value='{{item}}'>{{enums['education'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="row info_main_tab">
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:3em'><span class='info_red'>* </span>证件类型 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <select name="card_type" required="required" class="info_select">
+                                <option value="">请选择</option>
+                                {% for item in enums.get('card_type') %}
+                                    <option value='{{item}}'>{{enums['card_type'].get(item)}}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>证件号码 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='card_id' maxlength='20' class="info_input"
+                                   value='{{ em_profile.card_id or '' }}'
+                                   required='required'
+                            />
+                        </span>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <label style='margin-left:2.4em'><span class='info_red'>* </span>过期时间 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="date" class="info_input"
+                                   required="required" name="card_deadline"
+                                   value='{{ em_profile.card_deadline or '' }}'/>
+                        </span>
+                    </div>
+                </div>
+                <div class="row info_main_tab">
+                    <div class="col-xs-12 col-md-10">
+                        <label style='margin-left:3em'><span class='info_red'>* </span>证件地址 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='card_place' required="required"
+                                   style="width:450px;" class="info_input"
+                                   value='{{ em_profile.card_place or '' }}'
+                            />
+                        </span>
+
+                    </div>
+                </div>
+                <div class="row info_main_tab">
+                    <div class="col-xs-12 col-md-10">
+                        <label style='margin-left:3em'><span class='info_red'>* </span>现住地址 : </label>
+                        <span style='position:relative;margin-left:0.5em;'>
+                            <input type="text" name='current_address' required="required"
+                                   style="width:450px;" class="info_input"
+                                   value='{{ em_profile.current_address or '' }}'
+                                   placeholder="请省、市、区、街(小区)、门牌号顺序填写"
+                            />
+                        </span>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- 银行卡信息 -->
+            <div class="tab-pane fade" id="bankcard">
+                <div class='row info_main_tab'>
+                    <label style='margin-left:20em'><span class='info_red'>* </span>开户行 : </label>
+                    <span style='position:relative;margin-left:1em;'>
+                        <select name="bank_type" required="required" class="info_select">
+                            <option value="">请选择</option>
+                            {% for item in enums.get('bank_type') %}
+                                <option value='{{item}}'>{{enums['bank_type'].get(item)}}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </div>
+                <div class='row info_main_tab'>
+                    <label style='margin-left:18em'><span class='info_red'>* </span>开户行国家 : </label>
+                    <span style='position:relative;margin-left:1em;'>
+                        <select name="bank_country" required="required" class="info_select">
+                            <option value="">请选择</option>
+                            {% for item in enums.get('bank_country') %}
+                                <option value='{{item}}'>{{enums['bank_country'].get(item)}}</option>
+                            {% endfor %}
+                        </select>
+                        <span class='info_red' style="margin-left: 1em">(请确认开户行与工资卡号为同一银行)</span>
+                    </span>
+                </div>
+                <div class='row info_main_tab'>
+                    <label style='margin-left:18.8em'><span class='info_red'>* </span>开户城市 : </label>
+                    <span style='position:relative;margin-left:1em;'>
+                        <input type="text" list="city_list" name="bank_city" class="info_select" required="required" />
+                        <datalist id="city_list">
+                            {% for item in enums.get('bank_city') %}
+                                <option value='{{enums['bank_city'].get(item)}}'></option>
+                            {% endfor %}
+                        </datalist>
+                    </span>
+                </div>
+                <div class='row info_main_tab'>
+                    <label style='margin-left:18.8em'><span class='info_red'>* </span>工资卡号 : </label>
+                    <span style='position:relative;margin-left:1em;'>
+                        <input type="text" value="{{em_profile.bank_id or ''}}"
+                               maxlength='30' name="bank_id" required="required"
+                               class="info_input"
+                        />
+                    </span>
+                </div>
+                <div class='row info_main_tab'>
+                    <label style='margin-left:18.8em'><span class='info_red'>* </span>开户姓名 : </label>
+                    <span style='position:relative;margin-left:1em;'>
+                        <input type="text" value="{{em_profile.bank_name or ''}}"
+                               maxlength='30' name="khxm" required="required"
+                                class="info_input"
+                        />
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 6%;">
+            <p style='text-align: center' class='red'>*以上所填各项资料均属实，授权公司对于所填内容进行核实，今后一旦发现有虚假信息，同意立即解除劳动合同且无任何经济补偿</p>
+            <p style='text-align: center' class='red'>*本人承诺在职期间，以上资料如有变更，将在3个工作日内书面通知公司人力资源部，否则因此引起的任何责任，将由本人承担</p>
+            <input type="hidden" name='user_id' id='user_id' length='30' value='{{em_profile.user_id or ''}}' required='required' />
+            <div  style="text-align:center; width:100%;height:30%;margin:0px;">
+                <button id="info_submit" type="submit" style='margin: auto'>提交</button>
+            </div>
+        </div>
 
     </form>
+<div class="info_main_tab">&nbsp</div>
 </div>
 {% endblock %}
 

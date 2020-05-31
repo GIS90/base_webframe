@@ -179,3 +179,24 @@
     text-align: center;
     /*font-size: 14px;*/
 }
+
+.info_red{
+    color:red!important
+}
+
+.info_main_tab{
+    margin: 20px 0 24px 0;
+}
+
+.info_input{
+    width: 160px;
+    height: 30px;
+}
+
+.info_select{
+    width: 160px;
+    height: 30px;
+    text-align: center;
+    text-align-last: center;
+}
+

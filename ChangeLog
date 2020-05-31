@@ -1,6 +1,10 @@
 CHANGES
 =======
 
+* user update sysuser
+* blueprint: tasks update apis
+* add 404&500 page
+* app.context\_processor: menu&&current\_user
 * set favicon
 * important file add note
 * README.md update

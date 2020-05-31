@@ -32,18 +32,32 @@ class EmployeeModel(base.ModelBase):
     __tablename__ = 'employee'
 
     id = Column(Integer, primary_key=True)
+    # 基本信息
     china_name = Column(String(30))
     english_name = Column(String(30))
-    age = Column(Integer())
-    sex = Column(String(5))
+    sex = Column(String(10))
     birth_date = Column(Date())
+    political_status = Column(String(10))
+    nation = Column(String(10))
+    nationality = Column(String(10))
+    education = Column(String(10))
+    marriage = Column(String(10))
     email = Column(String(30))
     phone = Column(String(30))
-    education = Column(String(30))
-    birth_place = Column(String(50))
+    # 证件信息
+    card_type = Column(String(10))
     card_id = Column(String(30))
-    native_place = Column(String(50))
-
-
-
-
+    card_place = Column(String(100))
+    card_deadline = Column(Date())
+    residence_type = Column(String(10))
+    current_address = Column(String(100))
+    # 银行卡信息
+    bank_type = Column(String(10))
+    bank_country = Column(String(10))
+    bank_city = Column(String(10))
+    bank_id = Column(String(30))
+    bank_name = Column(String(30))
+    # 入职信息
+    entry_date = Column(Date())
+    quit_date = Column(Date())
+    status = Column(String(10))

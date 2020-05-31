@@ -35,21 +35,17 @@ class EmployeeBo(BOBase):
         search = params.get('search')
         count = 0
         q = self.session.query(EmployeeModel)
+        q = q.filter(EmployeeModel.status == 1)
         if search:
             q = q.filter(or_(
                 EmployeeModel.china_name.like(search),
                 EmployeeModel.english_name.like(search),
-                EmployeeModel.age.like(search),
-                EmployeeModel.sex.like(search),
                 EmployeeModel.birth_date.like(search),
                 EmployeeModel.email.like(search),
                 EmployeeModel.phone.like(search),
-                EmployeeModel.education.like(search),
-                EmployeeModel.birth_place.like(search),
                 EmployeeModel.card_id.like(search),
-                EmployeeModel.native_place.like(search),
             ))
-        q = q.order_by(EmployeeModel.id.asc())
+        q = q.order_by(EmployeeModel.entry_date.desc())
         count = q.count()
         if start:
             q = q.offset(start)

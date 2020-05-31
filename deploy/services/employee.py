@@ -16,8 +16,10 @@ base_info:
 ------------------------------------------------
 """
 from deploy.bo.employee import EmployeeBo
+from deploy.bo.enums import EnumsBo
 from deploy.utils.utils import d2s
 from deploy.utils.status import Status
+from deploy.utils.logger import logger as LOG
 
 
 class EmployeeService(object):
@@ -26,15 +28,14 @@ class EmployeeService(object):
         'id',
         'china_name',
         'english_name',
-        'age',
         'sex',
         'birth_date',
+        'nationality',
         'email',
         'phone',
         'education',
-        'birth_place',
         'card_id',
-        'native_place'
+        'entry_date'
     ]
 
     request_attrs = [
@@ -47,6 +48,7 @@ class EmployeeService(object):
     def __init__(self):
         super(EmployeeService, self).__init__()
         self.employee_bo = EmployeeBo()
+        self.enums_bo = EnumsBo()
 
     def get_count(self):
         count = self.employee_bo.get_count()
@@ -69,14 +71,25 @@ class EmployeeService(object):
                 start = int(v)
                 new_args[k] = start
             elif k == 'search':
+                if isinstance(v, unicode):
+                    v = v.encode('utf-8')
                 new_args[k] = "%" + str(v) + "%"
             else:
                 new_args[k] = v
         # start = (int(new_args['index']) - 1) * int(new_args.get('limit'))
         # new_args['start'] = start
         all_empls, count = self.employee_bo.get_all(new_args)
+        data = dict()
+        LOG.info('employee>api_list: %s' % count)
         if not all_empls:
-            return [], 0
+            data['totalCount'] = 0
+            data['datalist'] = []
+            return Status(
+                    101,
+                    'success',
+                    u'成功，但数据为空',
+                    data
+                    ).json()
 
         results = list()
         for empl in all_empls:
@@ -85,40 +98,50 @@ class EmployeeService(object):
 
             result = dict()
             for attr in self.employee_all_attrs:
+                params = dict()
                 if attr == 'id':
                     result[attr] = start + 1
                 elif attr == 'china_name':
                     result[attr] = empl.china_name
                 elif attr == 'english_name':
                     result[attr] = empl.english_name
-                elif attr == 'age':
-                    result[attr] = empl.age
+                elif attr == 'nationality':
+                    nationality = empl.nationality
+                    if not nationality:
+                        result[attr] = empl.nationality
+                    else:
+                        params['enum_type'] = attr
+                        params['enum_subid'] = empl.nationality
+                        result[attr] = self.enums_bo.get_enumname_by_params(params)
                 elif attr == 'sex':
-                    result[attr] = '男' if empl.sex == 'M' \
-                        else '女'
+                    sex = empl.sex
+                    if not sex:
+                        result[attr] = empl.sex
+                    else:
+                        params['enum_type'] = attr
+                        params['enum_subid'] = empl.sex
+                        result[attr] = self.enums_bo.get_enumname_by_params(params)
                 elif attr == 'birth_date':
                     result[attr] = d2s(empl.birth_date, fmt="%Y-%m-%d") \
                         if empl.birth_date else ''
+                elif attr == 'entry_date':
+                    result[attr] = d2s(empl.entry_date, fmt="%Y-%m-%d") \
+                        if empl.entry_date else ''
                 elif attr == 'email':
                     result[attr] = empl.email
                 elif attr == 'phone':
                     result[attr] = empl.phone
-                elif attr == 'education':
-                    result[attr] = empl.education
-                elif attr == 'birth_place':
-                    result[attr] = empl.birth_place
                 elif attr == 'card_id':
                     result[attr] = empl.card_id
-                elif attr == 'native_place':
-                    result[attr] = empl.native_place
 
             start += 1
             results.append(result)
+        data['totalCount'] = count
+        data['datalist'] = results
 
-        return results, count
-
-
-
-
-
-
+        return Status(
+                    100,
+                    'success',
+                    u'成功',
+                    data
+                    ).json()

@@ -38,10 +38,3 @@ class SysUserModel(base.ModelBase):
     phone = Column(String(50))
     is_admin = Column(Boolean())
 
-
-
-
-
-
-
-
