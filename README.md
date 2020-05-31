@@ -54,9 +54,14 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
   - prod：etc/prod/gunicorn.conf
 如需特别项目启动信息，可以加入gunicorn.conf或者更改命令行gunicorn启动方式加入参数即可
 
-> ### 其他
+> ### 其他（已废弃）
 
 base_webframe_start.bash、base_webframe_end.bash为手动方式进行项目启动与项目结束
+
+> ### sql
+
+创建sql：deploy>sql>table_create_sql.sql，直接执行即可
+插入sql：deploy>sql>print_insert_sql.py，具体需要哪些insert的数据，看代码，根据需要插入
 
 > ### 手动启动
 
