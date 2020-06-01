@@ -35,7 +35,7 @@
           margin: 0 auto;
           padding: 1em 1em;
           text-align: center;
-          background: url("server.png") no-repeat top 16em center/128px 128px;
+          background: url("{{ url_for('static', filename='images/server.png') }}") no-repeat top 16em center/128px 128px;
         }
 
         h1, p:not(:last-of-type) {

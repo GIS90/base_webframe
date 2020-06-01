@@ -68,6 +68,7 @@ base_webframe_start.bash、base_webframe_end.bash为手动方式进行项目启�
 项目根目录wsgi.py文件加入
 app.run(host="0.0.0.0", port=11111, debug=True)
 执行python wsgi.py，代码目前已写入，处于注释状态
+如果手动启动模式开启，在gunicorn进行启动，会error: [Errno 48] Address already in use.
 
 > ### 联系方式
 

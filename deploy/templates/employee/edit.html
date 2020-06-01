@@ -270,6 +270,7 @@
                         <input type="text" value="{{em_profile.bank_id or ''}}"
                                maxlength='30' name="bank_id" required="required"
                                class="info_input" id="bank_id"
+                               oninput="value=value.replace(/[^\d]/g,'')"
                         />
                     </span>
                 </div>
@@ -290,7 +291,7 @@
             <input type="hidden" name='status' id='status' value='{{em_profile.status or '1'}}'/>
             <input type="hidden" name='is_add' id='is_add' value='{{em_profile.is_add or '1'}}'/>
             <div  style="text-align:center; width:100%;height:30%;margin:0px;">
-                <button type="button" id="info_submit" name="info_submit"
+                <button type="submit" id="info_submit" name="info_submit"
                         class="info_submit" onclick="form_subimt()">提交</button>
             </div>
         </div>
@@ -320,8 +321,6 @@
             $('#info_list li:eq(1) a').tab('show');
             return false;
         }
-
-
 
         //submit
         var postJsonData= {
@@ -374,5 +373,13 @@
         });
 
     }
+    // 银行卡号
+    !function () {
+        $('#bank_id').on('keyup mouseout input',function(){
+            var $this = $(this),
+                v = $this.val();
+            /\S{5}/.test(v) && $this.val(v.replace(/\s/g,'').replace(/(.{4})/g, "$1 "));
+        });
+    }();
 </script>
 {% endblock %}
