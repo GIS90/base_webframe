@@ -303,8 +303,25 @@
 
 {% block scripts %}
 <script>
+    toastr.options = {
+        closeButton: false,
+        debug: false,
+        progressBar: true,
+        positionClass: "toast-top-center",
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "1600",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+
     function initPage() {
-    }
+    };
+
     function form_subimt() {
         // check
         if($('input[name=china_name]').val() == '' || $('input[name=phone]').val() == '' || $('select[name=sex]').val() == '' ||
@@ -360,19 +377,25 @@
             success: function (json_result) {
                 var message = json_result.msg;
                 if (json_result.status_id === 100){
-                    msgbox('提示', '操作执行成功!', '', null, 0, 'true');
+                    toastr.success("温馨提示：", message);
+                    window.location.href = window.location.href;
                 }else {
-                    msgbox('提示', message, '', null, 0, 'error');
+                    toastr.error("温馨提示：", message);
                 }
 
             },
             error: function (result) {
                 console.log('add data is error: '+ result);
-                msgbox('提示', '服务端发生故障，新增失败', '', null, 0, 'error');
+                toastr.error("温馨提示：", "服务端发生故障，新增失败！");
             }
         });
 
     }
+
+    function tiaozhuan(){
+        window.location.href = window.location.href;
+    };
+
     // 银行卡号
     !function () {
         $('#bank_id').on('keyup mouseout input',function(){
