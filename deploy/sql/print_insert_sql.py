@@ -232,21 +232,26 @@ def print_employee(max=50):
     prefix = """insert into employee(china_name, english_name, sex, birth_date, political_status, nation, 
 nationality, education, marriage, phone, email, card_type, 
 card_id, card_place, card_deadline, residence_type, current_address, bank_type, 
-bank_country, bank_city, bank_id, bank_name, entry_date, status) VALUES """
+bank_country, bank_city, bank_id, bank_name, entry_date, status,
+entry_submit_time, entry_submit_rtx
+) VALUES """
     suffix = ''
     for i in range(0, max, 1):
         name = _generator_name()
         phone = _get_random_phone()
+        rtx = 'admin'
         val = """(
         '%s', '%s', '%s', '%s', '%s', '%s',
         '%s', '%s', '%s', '%s', '%s', '%s',
         '%s', '%s', '%s', '%s', '%s', '%s',
-        '%s', '%s', '%s', '%s', '%s', '%s')
+        '%s', '%s', '%s', '%s', '%s', '%s',
+        '%s', '%s')
         """ % (
             name, _get_eng_name(random.randint(1, 8)), _get_value_random(_type='sex'), _get_random_date(), _get_value_random(_type='political_status'), _get_value_random(_type='nation'),
             _get_value_random(_type='nationality'), _get_value_random(_type='education'), _get_value_random(_type='marriage'), phone, _get_random_email(phone), _get_value_random(_type='card_type'),
             _get_value_random(_type='card_id'), _get_random_address(), _get_random_date(), _get_value_random(_type='residence_type'), _get_random_address(), _get_value_random(_type='bank_type'),
-            _get_value_random(_type='bank_country'), _get_value_random(_type='bank_city'), _get_random_bank_id(), name, _get_random_date(), _get_value_random(_type='status')
+            _get_value_random(_type='bank_country'), _get_value_random(_type='bank_city'), _get_random_bank_id(), name, _get_random_date(), _get_value_random(_type='status'),
+            (_get_random_date() + ' 12:12:12'), rtx
         )
         if i == (max - 1):
             suffix += val + ';'

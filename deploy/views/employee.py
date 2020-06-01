@@ -27,19 +27,39 @@ from deploy.utils.status import Status
 employee = Blueprint('employee', __name__)
 
 
-@employee.route('/employee/add/')
-def html_add():
+@employee.route('/employee/edit/')
+def html_edit():
     g.menuf = 'info'
-    g.menusub = 'add'
+    g.menusub = 'edit'
     enums = EnumsService().get_all_enums()
     em_profile = dict()
-    return render_template('employee/add.html', enums=enums, em_profile=em_profile)
+    is_add = '0' if em_profile else '1'
+    return render_template('employee/edit.html',
+                           enums=enums,
+                           em_profile=em_profile,
+                           is_add=is_add)
 
 
-@employee.route('/employee/add_api', methods=['GET', 'POST'])
-def add_api():
-    print '=' * 100
-    print request.form
+@employee.route('/employee/add_or_edit_api/', methods=['GET', 'POST'])
+def add_or_edit_api():
+    if request.method == 'GET':
+        return Status(
+            201,
+            'failure',
+            u'请求方法错误',
+            {}
+        ).json()
+
+    try:
+        json = request.get_json()
+        res = EmployeeService().add_or_edit_empl(json)
+    except Exception as e:
+        LOG.error("employee>add_api is error: %s" % e)
+        res = Status(101,
+                     'failure',
+                     u'Server发生错误，新增失败',
+                     {}).json()
+    return res
 
 
 @employee.route('/employee/list/')
@@ -66,18 +86,6 @@ def api_list_all():
         LOG.error("employee>api_list is error: %s" % e)
         res = Status(101,
                      'failure',
-                     u'数据获取失败',
+                     u'Server发生错误，获取失败',
                      {}).json()
     return res
-
-
-@employee.route('/employee/edit/')
-def html_edit():
-    g.menuf = 'info'
-    g.menusub = 'edit'
-    return render_template('employee/edit.html')
-
-
-
-
-

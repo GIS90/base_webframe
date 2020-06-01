@@ -19,7 +19,7 @@ from sqlalchemy import (
         Column,
         String,
         Integer,
-        Boolean,
+        TIMESTAMP,
         Date
 )
 from deploy.models import base
@@ -61,3 +61,9 @@ class EmployeeModel(base.ModelBase):
     entry_date = Column(Date())
     quit_date = Column(Date())
     status = Column(String(10))
+    entry_submit_time = Column(TIMESTAMP())
+    entry_submit_rtx = Column(String(30))
+    quit_submit_time = Column(TIMESTAMP())
+    quit_submit_rtx = Column(String(30))
+    last_update_time = Column(TIMESTAMP())
+    last_update_rtx = Column(String(30))

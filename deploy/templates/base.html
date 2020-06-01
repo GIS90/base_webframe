@@ -25,6 +25,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/msgbox.js') }}"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -91,9 +92,8 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{% if menu.sub == 'add' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_add') }}"><i class="fa {% if menu.sub == 'add' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 新增</a></li>
-                        <li class="{% if menu.sub == 'list' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_list') }}"><i class="fa {% if menu.sub == 'list' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 浏览</a></li>
                         <li class="{% if menu.sub == 'edit' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_edit') }}"><i class="fa {% if menu.sub == 'edit' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 编辑</a></li>
+                        <li class="{% if menu.sub == 'list' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_list') }}"><i class="fa {% if menu.sub == 'list' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 浏览</a></li>
                     </ul>
                 </li>
                 <li class="{% if menu.f == 'set' %}treeview active{% else %}treeview{% endif %}">

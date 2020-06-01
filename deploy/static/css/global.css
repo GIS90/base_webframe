@@ -200,3 +200,17 @@
     text-align-last: center;
 }
 
+.info_submit{
+    width: 90px;
+    height: 35px;
+    font-size: 14px;
+    background-color: #428bca;
+    color: #fff;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-weight: 900;
+}

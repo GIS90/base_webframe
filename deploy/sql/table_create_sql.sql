@@ -59,6 +59,12 @@ CREATE TABLE `blog`.`employee` (
 	`entry_date` date NOT NULL COMMENT '入职日期',
 	`quit_date` date COMMENT '离职日期',
 	`status` varchar(10) NOT NULL COMMENT '任职状态',
+	`entry_submit_time` timestamp NOT NULL COMMENT '入职提交日期',
+	`entry_submit_rtx` varchar(30) NOT NULL COMMENT '入职提交用户',
+	`quit_submit_time` timestamp COMMENT '离职提交日期',
+	`quit_submit_rtx` varchar(30) COMMENT '离职提交用户',
+	`last_update_time` timestamp COMMENT '最后更新日期',
+	`last_update_rtx` varchar(30) COMMENT '最后更新用户',
 
 
 	PRIMARY KEY (`id`)

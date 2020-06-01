@@ -100,19 +100,18 @@ class WebFlaskServer(WebBaseClass):
         @self.app.context_processor
         def default_context_processor():
             user_id = session.get('user_id')
+            menu = current_user = dict()
+            if hasattr(g, 'menuf'):
+                menu['f'] = g.menuf
+            if hasattr(g, 'menusub'):
+                menu['sub'] = g.menusub
             if user_id:
                 current_user = SysUserService().get_user_by_params(user_id)
-                menu = dict()
-                menu['f'] = g.menuf
-                menu['sub'] = g.menusub
-                return {
-                    'current_user': current_user,
-                    'sysversion': VERSION,
-                    'menu': menu
-                }
 
             return {
-                'sysversion': VERSION
+                'current_user': current_user,
+                'sysversion': VERSION,
+                'menu': menu
             }
 
         # set favicon

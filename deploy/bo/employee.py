@@ -25,17 +25,21 @@ class EmployeeBo(BOBase):
     def __init__(self):
         super(EmployeeBo, self).__init__()
 
+    def new_mode(self):
+        return EmployeeModel()
+
     def get_count(self):
         q = self.session.query(func.count(EmployeeModel.id)).scalar()
         return q
 
-    def get_all(self, params):
+    def get_all(self, params, status=1):
         start = params.get('start')
         limit = params.get('limit')
         search = params.get('search')
         count = 0
         q = self.session.query(EmployeeModel)
-        q = q.filter(EmployeeModel.status == 1)
+        if status:
+            q = q.filter(EmployeeModel.status == 1)
         if search:
             q = q.filter(or_(
                 EmployeeModel.china_name.like(search),
@@ -53,3 +57,11 @@ class EmployeeBo(BOBase):
             q = q.limit(limit)
         q = q.all()
         return q, count
+
+    def is_exist_by_card_id(self, card_id):
+        if not card_id:
+            return False
+
+        q = self.session.query(EmployeeModel)
+        q = q.filter(EmployeeModel.card_id == card_id)
+        return True if q.first() else False

@@ -17,14 +17,14 @@ base_info:
 """
 from deploy.bo.employee import EmployeeBo
 from deploy.bo.enums import EnumsBo
-from deploy.utils.utils import d2s
+from deploy.utils.utils import d2s, get_user_id, get_now
 from deploy.utils.status import Status
 from deploy.utils.logger import logger as LOG
 
 
 class EmployeeService(object):
 
-    employee_all_attrs = [
+    employee_show_attrs = [
         'id',
         'china_name',
         'english_name',
@@ -42,7 +42,80 @@ class EmployeeService(object):
         'index',
         'limit',
         'search',
-        'start',
+        'start'
+    ]
+
+    request_add_attrs = [
+        'china_name',
+        'english_name',
+        'email',
+        'phone',
+        'entry_date',
+        'sex',
+        'nation',
+        'birth_date',
+        'political_status',
+        'nationality',
+        'residence_type',
+        'education',
+        'marriage',
+        'card_type',
+        'card_id',
+        'card_deadline',
+        'card_place',
+        'current_address',
+        'bank_type',
+        'bank_country',
+        'bank_city',
+        'bank_id',
+        'bank_name',
+        'status',
+        'is_add'
+    ]
+
+    employee_emuns_attrs = [
+        'sex',
+        'nation',
+        'political_status',
+        'nationality',
+        'residence_type',
+        'education',
+        'marriage',
+        'card_type',
+        'bank_type',
+        'bank_country',
+        'bank_city'
+    ]
+
+    employee_attrs_dict = {
+        'china_name': "中文名称",
+        'english_name': "英文文名称",
+        'email': "邮箱",
+        'phone': "电话",
+        'entry_date': "入职日期",
+        'sex': "性别",
+        'nation': "民族",
+        'birth_date': "出生日期",
+        'political_status': "政治面貌",
+        'nationality': "国籍",
+        'residence_type': "户口类型",
+        'education': "教育程度",
+        'marriage': "婚姻状况",
+        'card_type': "证件类型",
+        'card_id': "证件编号",
+        'card_deadline': "过期日期",
+        'card_place': "证件地址",
+        'current_address': "现住地址",
+        'bank_type': "开户行",
+        'bank_country': "开户行国家",
+        'bank_city': "开户城市",
+        'bank_id': "工资卡号",
+        'bank_name': "开户姓名"
+    }
+
+    request_not_need_attrs = [
+        'english_name',
+        'email'
     ]
 
     def __init__(self):
@@ -62,8 +135,8 @@ class EmployeeService(object):
         for k, v in args.items():
             if k not in self.request_attrs:
                 return Status(
-                    201,
-                    'success',
+                    202,
+                    'failure',
                     u'%s参数不合法' % k,
                     data
                     ).json()
@@ -78,7 +151,9 @@ class EmployeeService(object):
                 new_args[k] = v
         # start = (int(new_args['index']) - 1) * int(new_args.get('limit'))
         # new_args['start'] = start
-        all_empls, count = self.employee_bo.get_all(new_args)
+
+        # status 任职状态 1在职 2离职
+        all_empls, count = self.employee_bo.get_all(new_args, status=1)
         data = dict()
         LOG.info('employee>api_list: %s' % count)
         if not all_empls:
@@ -86,7 +161,7 @@ class EmployeeService(object):
             data['datalist'] = []
             return Status(
                     101,
-                    'success',
+                    'failure',
                     u'成功，但数据为空',
                     data
                     ).json()
@@ -97,7 +172,7 @@ class EmployeeService(object):
                 continue
 
             result = dict()
-            for attr in self.employee_all_attrs:
+            for attr in self.employee_show_attrs:
                 params = dict()
                 if attr == 'id':
                     result[attr] = start + 1
@@ -145,3 +220,119 @@ class EmployeeService(object):
                     u'成功',
                     data
                     ).json()
+
+    def add_or_edit_empl(self, args):
+        """
+        add employee
+        :param args: form parameters
+        :return: 
+        """
+        new_args = dict()
+        for k, v in args.items():
+            if isinstance(k, unicode):
+                k = k.encode('utf-8')
+            if v and isinstance(v, unicode):
+                v = v.encode('utf-8')
+            if k not in self.request_add_attrs:
+                return Status(
+                    202,
+                    'failure',
+                    u'%s参数不合法' % k,
+                    {}
+                    ).json()
+
+            if k in self.request_not_need_attrs:
+                new_args[k] = str(v)
+                continue
+
+            if k and not v:
+                attr_name = self.employee_attrs_dict.get(k)
+                return Status(
+                    203,
+                    'failure',
+                    u'%s内容需要进行填写' % attr_name,
+                    {}
+                    ).json()
+
+            new_args[k] = v
+        card_id = args.get('card_id')
+        is_add = new_args['is_add']
+        if is_add == '1' and self.employee_bo.is_exist_by_card_id(card_id):
+            return Status(
+                        205,
+                        'failure',
+                        u'%s用户已经存在，请勿重新提交' % args.get('china_name'),
+                        {}
+                        ).json()
+
+        new_empl_mode = self.employee_bo.new_mode()
+        # submit
+        for attr in self.request_add_attrs:
+            if not attr:
+                continue
+
+            if attr == 'china_name':
+                new_empl_mode.china_name = new_args[attr]
+            elif attr == 'english_name':
+                new_empl_mode.english_name = new_args[attr]
+            elif attr == 'email':
+                new_empl_mode.email = new_args[attr]
+            elif attr == 'phone':
+                new_empl_mode.phone = new_args[attr]
+            elif attr == 'entry_date':
+                new_empl_mode.entry_date = new_args[attr]
+            elif attr == 'sex':
+                new_empl_mode.sex = new_args[attr]
+            elif attr == 'nation':
+                new_empl_mode.nation = new_args[attr]
+            elif attr == 'birth_date':
+                new_empl_mode.birth_date = new_args[attr]
+            elif attr == 'political_status':
+                new_empl_mode.political_status = new_args[attr]
+            elif attr == 'nationality':
+                new_empl_mode.nationality = new_args[attr]
+            elif attr == 'residence_type':
+                new_empl_mode.residence_type = new_args[attr]
+            elif attr == 'education':
+                new_empl_mode.education = new_args[attr]
+            elif attr == 'marriage':
+                new_empl_mode.marriage = new_args[attr]
+            elif attr == 'card_type':
+                new_empl_mode.card_type = new_args[attr]
+            elif attr == 'card_id':
+                new_empl_mode.card_id = new_args[attr]
+            elif attr == 'card_deadline':
+                new_empl_mode.card_deadline = new_args[attr]
+            elif attr == 'card_place':
+                new_empl_mode.card_place = new_args[attr]
+            elif attr == 'current_address':
+                new_empl_mode.current_address = new_args[attr]
+            elif attr == 'bank_type':
+                new_empl_mode.bank_type = new_args[attr]
+            elif attr == 'bank_country':
+                new_empl_mode.bank_country = new_args[attr]
+            elif attr == 'bank_city':
+                new_empl_mode.bank_city = new_args[attr]
+            elif attr == 'bank_id':
+                new_empl_mode.bank_id = new_args[attr]
+            elif attr == 'bank_name':
+                new_empl_mode.bank_name = new_args[attr]
+            elif attr == 'status':
+                new_empl_mode.status = new_args[attr] if new_args[attr] else '1'
+
+        # record
+        if is_add in [1, '1']:
+            new_empl_mode.entry_submit_rtx = get_user_id()
+            new_empl_mode.entry_submit_time = get_now()
+        else:
+            new_empl_mode.last_update_rtx = get_user_id()
+            new_empl_mode.last_update_time = get_now()
+
+        self.employee_bo.add_model(new_empl_mode)
+        LOG.info("%s add employee is success" % card_id)
+        return Status(
+                     100,
+                     'success',
+                     u'成功',
+                     {}
+                     ).json()
