@@ -29,7 +29,7 @@ home = Blueprint('home', __name__)
 @home.route('/home/summary/')
 def summary():
     cur_date = get_now(format="%Y-%m-%d")
-    employee_count = EmployeeService().get_count()
+    employee_count = EmployeeService().get_count(status=1)
     return Status(100,
                   'success',
                   u'成功',

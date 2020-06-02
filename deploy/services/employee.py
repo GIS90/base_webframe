@@ -123,8 +123,8 @@ class EmployeeService(object):
         self.employee_bo = EmployeeBo()
         self.enums_bo = EnumsBo()
 
-    def get_count(self):
-        count = self.employee_bo.get_count()
+    def get_count(self, status=0):
+        count = self.employee_bo.get_count(status)
         return count if count else 0
 
     def get_all(self, args):

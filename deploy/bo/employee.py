@@ -28,9 +28,14 @@ class EmployeeBo(BOBase):
     def new_mode(self):
         return EmployeeModel()
 
-    def get_count(self):
-        q = self.session.query(func.count(EmployeeModel.id)).scalar()
-        return q
+    def get_count(self, status):
+        if not status:
+            q = self.session.query(func.count(EmployeeModel.id)).scalar()
+            return q
+
+        q = self.session.query(EmployeeModel)
+        q = q.filter(EmployeeModel.status == status)
+        return q.count()
 
     def get_all(self, params, status=1):
         start = params.get('start')
