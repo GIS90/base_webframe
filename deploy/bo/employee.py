@@ -58,10 +58,13 @@ class EmployeeBo(BOBase):
         q = q.all()
         return q, count
 
-    def is_exist_by_card_id(self, card_id):
+    def get_empl_by_card_id(self, card_id):
         if not card_id:
             return False
 
-        q = self.session.query(EmployeeModel)
+        q = self.session.query(
+            EmployeeModel
+        )
         q = q.filter(EmployeeModel.card_id == card_id)
-        return True if q.first() else False
+        q = q.first()
+        return q if q else {}

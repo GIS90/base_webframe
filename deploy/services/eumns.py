@@ -66,7 +66,7 @@ class EnumsService(object):
                 if not line.subid or not line.name:
                     continue
 
-                data[line.subid] = line.name
+                data[str(line.subid)] = line.name
 
             results[t] = data
 

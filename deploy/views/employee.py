@@ -22,22 +22,30 @@ from deploy.utils.logger import logger as LOG
 from deploy.services.employee import EmployeeService
 from deploy.services.eumns import EnumsService
 from deploy.utils.status import Status
+from deploy.utils.utils import timeer
 
 
 employee = Blueprint('employee', __name__)
 
 
-@employee.route('/employee/edit/')
-def html_edit():
+@employee.route('/employee/edit/<string:card_id>', methods=['GET', 'POST'])
+@timeer
+def html_edit(card_id):
     g.menuf = 'info'
     g.menusub = 'edit'
-    enums = EnumsService().get_all_enums()
-    em_profile = dict()
+    params = dict()
+    if isinstance(card_id, unicode):
+        card_id = card_id.encode('utf-8')
+    em_profile = EmployeeService().get_empl_by_card_id(card_id) \
+        if card_id != 'new' else {}
     is_add = '0' if em_profile else '1'
+    enums = EnumsService().get_all_enums()
+    params['is_add'] = is_add
+    params['enums'] = enums
+    params['em_profile'] = em_profile
+
     return render_template('employee/edit.html',
-                           enums=enums,
-                           em_profile=em_profile,
-                           is_add=is_add)
+                           params=params)
 
 
 @employee.route('/employee/add_or_edit_api/', methods=['GET', 'POST'])
@@ -46,7 +54,7 @@ def add_or_edit_api():
         return Status(
             201,
             'failure',
-            u'请求方法错误',
+            u'add_or_edit_api API请求方法错误',
             {}
         ).json()
 
@@ -70,12 +78,13 @@ def html_list():
 
 
 @employee.route('/employee/api_list/', methods=['GET', 'POST'])
+@timeer
 def api_list_all():
     if request.method == 'GET':
         return Status(
             201,
             'failure',
-            u'请求方法错误',
+            u'api_list API请求方法错误',
             {}
         ).json()
 
@@ -84,6 +93,29 @@ def api_list_all():
         res = EmployeeService().get_all(json)
     except Exception as e:
         LOG.error("employee>api_list is error: %s" % e)
+        res = Status(101,
+                     'failure',
+                     u'Server发生错误，获取失败',
+                     {}).json()
+    return res
+
+
+@employee.route('/employee/quit_empl/', methods=['GET', 'POST'])
+@timeer
+def quit_empl():
+    if request.method == 'GET':
+        return Status(
+            201,
+            'failure',
+            u'quit_empl API请求方法错误',
+            {}
+        ).json()
+
+    try:
+        json = request.get_json()
+        res = EmployeeService().quit_empl(json)
+    except Exception as e:
+        LOG.error("employee>quit_empl is error: %s" % e)
         res = Status(101,
                      'failure',
                      u'Server发生错误，获取失败',

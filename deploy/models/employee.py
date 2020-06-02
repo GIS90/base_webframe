@@ -54,7 +54,7 @@ class EmployeeModel(base.ModelBase):
     # 银行卡信息
     bank_type = Column(String(10))
     bank_country = Column(String(10))
-    bank_city = Column(String(10))
+    bank_city = Column(String(30))
     bank_id = Column(String(30))
     bank_name = Column(String(30))
     # 入职信息

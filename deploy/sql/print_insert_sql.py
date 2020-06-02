@@ -140,8 +140,16 @@ bank_type, bank_country, bank_city, bank_id, bank_name
         return random.randint(1, 2)
     elif _type == 'bank_country':
         return random.randint(1, 6)
-    elif _type == 'bank_city':
-        return random.randint(1, 6)
+
+
+def _get_random_bank_city():
+    citys = [
+        '北京', '上海', '武汉', '通辽',
+        '满洲里', '包头', '呼和浩特', '呼伦贝尔',
+        '西安', '重庆', '南京', '哈尔滨',
+        '吉林', '沈阳', '南京', '哈尔滨',
+    ]
+    return random.choice(citys)
 
 
 def _get_random_date():
@@ -250,7 +258,7 @@ entry_submit_time, entry_submit_rtx
             name, _get_eng_name(random.randint(1, 8)), _get_value_random(_type='sex'), _get_random_date(), _get_value_random(_type='political_status'), _get_value_random(_type='nation'),
             _get_value_random(_type='nationality'), _get_value_random(_type='education'), _get_value_random(_type='marriage'), phone, _get_random_email(phone), _get_value_random(_type='card_type'),
             _get_value_random(_type='card_id'), _get_random_address(), _get_random_date(), _get_value_random(_type='residence_type'), _get_random_address(), _get_value_random(_type='bank_type'),
-            _get_value_random(_type='bank_country'), _get_value_random(_type='bank_city'), _get_random_bank_id(), name, _get_random_date(), _get_value_random(_type='status'),
+            _get_value_random(_type='bank_country'), _get_random_bank_city(), _get_random_bank_id(), name, _get_random_date(), _get_value_random(_type='status'),
             (_get_random_date() + ' 12:12:12'), rtx
         )
         if i == (max - 1):
@@ -273,7 +281,7 @@ insert into enums(subid, type, name) VALUES (1,'marriage','已婚'),(2,'marriage
 insert into enums(subid, type, name) VALUES (1,'residence_type','城镇户口'),(2,'residence_type','农业户口');
 insert into enums(subid, type, name) VALUES (1,'card_type','二代身份证'),(2,'card_type','护照'),(3,'card_type','其他');
 insert into enums(subid, type, name) VALUES (1,'bank_country','中华人民共和国'),(2,'bank_country','美国'),(3,'bank_country','英国'),(4,'bank_country','德国'),(5,'bank_country','日本'),(6,'bank_country','其他');
-insert into enums(subid, type, name) VALUES (1,'bank_type','建设银行'),(2,'bank_type','农业银行');
+insert into enums(subid, type, name) VALUES (1,'bank_type','建设银行'),(2,'bank_type','农业银行'),(3,'bank_type','工商银行'),(4,'bank_type','邮政储蓄银行'),(5,'bank_type','中国银行'),(6,'bank_type','交通银行');
 insert into enums(subid, type, name) VALUES (1,'bank_city','北京'),(2,'bank_city','上海'),(3,'bank_city','武汉'),(4,'bank_city','广州'),(5,'bank_city','深圳'),(6,'bank_city','通辽'),(7,'bank_city','满洲里'),(8,'bank_city','呼和浩特'),(9,'bank_city','重庆'),(10,'bank_city','包头'),(11,'bank_city','西安'),(12,'bank_city','呼伦贝尔'),(13,'bank_city','南京'),(14,'bank_city','哈尔滨'),(15,'bank_city','沈阳'),(16,'bank_city','吉林');
 """
 

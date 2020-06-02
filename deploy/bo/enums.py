@@ -62,5 +62,3 @@ class EnumsBo(BOBase):
             q = q.filter(EnumsModel.subid == enum_subid)
         q = q.first()
         return q.name if q else None
-
-

@@ -255,84 +255,139 @@ class EmployeeService(object):
                     ).json()
 
             new_args[k] = v
+
         card_id = args.get('card_id')
         is_add = new_args['is_add']
-        if is_add == '1' and self.employee_bo.is_exist_by_card_id(card_id):
-            return Status(
-                        205,
-                        'failure',
-                        u'%s用户已经存在，请勿重新提交' % args.get('china_name'),
-                        {}
-                        ).json()
+        china_name = args.get('china_name')
+        if isinstance(card_id, unicode):
+            card_id = card_id.encode('utf-8')
+        exist_empl_mode = self.employee_bo.get_empl_by_card_id(card_id)
 
-        new_empl_mode = self.employee_bo.new_mode()
+        if is_add in ['1', 1] and exist_empl_mode:
+            return Status(
+                    204,
+                    'failure',
+                    u'%s用户已存在，无需重新建立信息档案' % china_name,
+                    {}
+                    ).json()
+
+        empl_mode = self.employee_bo.new_mode() if is_add == '1' \
+            else exist_empl_mode
+
         # submit
         for attr in self.request_add_attrs:
             if not attr:
                 continue
 
             if attr == 'china_name':
-                new_empl_mode.china_name = new_args[attr]
+                empl_mode.china_name = new_args.get(attr)
             elif attr == 'english_name':
-                new_empl_mode.english_name = new_args[attr]
+                empl_mode.english_name = new_args[attr]
             elif attr == 'email':
-                new_empl_mode.email = new_args[attr]
+                empl_mode.email = new_args[attr]
             elif attr == 'phone':
-                new_empl_mode.phone = new_args[attr]
+                empl_mode.phone = new_args[attr]
             elif attr == 'entry_date':
-                new_empl_mode.entry_date = new_args[attr]
+                empl_mode.entry_date = new_args[attr]
             elif attr == 'sex':
-                new_empl_mode.sex = new_args[attr]
+                empl_mode.sex = new_args[attr]
             elif attr == 'nation':
-                new_empl_mode.nation = new_args[attr]
+                empl_mode.nation = new_args[attr]
             elif attr == 'birth_date':
-                new_empl_mode.birth_date = new_args[attr]
+                empl_mode.birth_date = new_args[attr]
             elif attr == 'political_status':
-                new_empl_mode.political_status = new_args[attr]
+                empl_mode.political_status = new_args[attr]
             elif attr == 'nationality':
-                new_empl_mode.nationality = new_args[attr]
+                empl_mode.nationality = new_args[attr]
             elif attr == 'residence_type':
-                new_empl_mode.residence_type = new_args[attr]
+                empl_mode.residence_type = new_args[attr]
             elif attr == 'education':
-                new_empl_mode.education = new_args[attr]
+                empl_mode.education = new_args[attr]
             elif attr == 'marriage':
-                new_empl_mode.marriage = new_args[attr]
+                empl_mode.marriage = new_args[attr]
             elif attr == 'card_type':
-                new_empl_mode.card_type = new_args[attr]
+                empl_mode.card_type = new_args[attr]
             elif attr == 'card_id':
-                new_empl_mode.card_id = new_args[attr]
+                empl_mode.card_id = new_args[attr]
             elif attr == 'card_deadline':
-                new_empl_mode.card_deadline = new_args[attr]
+                empl_mode.card_deadline = new_args[attr]
             elif attr == 'card_place':
-                new_empl_mode.card_place = new_args[attr]
+                empl_mode.card_place = new_args[attr]
             elif attr == 'current_address':
-                new_empl_mode.current_address = new_args[attr]
+                empl_mode.current_address = new_args[attr]
             elif attr == 'bank_type':
-                new_empl_mode.bank_type = new_args[attr]
+                empl_mode.bank_type = new_args[attr]
             elif attr == 'bank_country':
-                new_empl_mode.bank_country = new_args[attr]
+                empl_mode.bank_country = new_args[attr]
             elif attr == 'bank_city':
-                new_empl_mode.bank_city = new_args[attr]
+                empl_mode.bank_city = new_args[attr]
             elif attr == 'bank_id':
-                new_empl_mode.bank_id = new_args[attr]
+                empl_mode.bank_id = new_args[attr]
             elif attr == 'bank_name':
-                new_empl_mode.bank_name = new_args[attr]
+                empl_mode.bank_name = new_args[attr]
             elif attr == 'status':
-                new_empl_mode.status = new_args[attr] if new_args[attr] else '1'
+                empl_mode.status = new_args[attr] if new_args[attr] else '1'
 
         # record
         if is_add in [1, '1']:
-            new_empl_mode.entry_submit_rtx = get_user_id()
-            new_empl_mode.entry_submit_time = get_now()
+            empl_mode.entry_submit_rtx = get_user_id()
+            empl_mode.entry_submit_time = get_now()
         else:
-            new_empl_mode.last_update_rtx = get_user_id()
-            new_empl_mode.last_update_time = get_now()
+            empl_mode.last_update_rtx = get_user_id()
+            empl_mode.last_update_time = get_now()
 
-        self.employee_bo.add_model(new_empl_mode)
-        LOG.info("%s add employee is success" % card_id)
+        self.employee_bo.add_model(empl_mode) if is_add == '1' \
+            else self.employee_bo.merge_model(empl_mode)
+
+        if is_add == '1':
+            LOG.info("%s add employee is success" % card_id)
+            return Status(
+                         100,
+                         'success',
+                         u'新增%s成功' % china_name,
+                         {}
+                         ).json()
+
+        LOG.info("%s edit employee is success" % card_id)
         return Status(
-                     100,
+                     110,
                      'success',
-                     u'成功',
+                     u'%s信息编辑成功' % china_name,
                      {}
                      ).json()
+
+    def get_empl_by_card_id(self, card_id):
+        return self.employee_bo.get_empl_by_card_id(str(card_id)) \
+            if card_id else {}
+
+    def quit_empl(self, json_args):
+        card_id = json_args.get('card_id')
+        if not card_id:
+            return Status(
+                    202,
+                    'failure',
+                    u'quit_empl API无card_id参数',
+                    {}
+                    ).json()
+        if isinstance(card_id, unicode):
+            card_id = card_id.encode('utf-8')
+
+        empl_mode = self.employee_bo.get_empl_by_card_id(card_id)
+        if not empl_mode:
+            return Status(
+                    203,
+                    'failure',
+                    u'quit_empl删除不存在用户：%s' % json_args.get('card_id'),
+                    {}
+                    ).json()
+
+        empl_mode.status = '2'
+        empl_mode.quit_submit_time = get_now()
+        empl_mode.quit_submit_rtx = get_user_id()
+        self.employee_bo.merge_model(empl_mode)
+        return Status(
+                    100,
+                    'failure',
+                    u'%s操作离职成功' % empl_mode.china_name,
+                    {}
+                    ).json()

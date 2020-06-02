@@ -56,7 +56,8 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
 
 > ### 其他（已废弃）
 
-base_webframe_start.bash、base_webframe_end.bash为手动方式进行项目启动与项目结束
+  - base_webframe_start.bash、base_webframe_end.bash为手动方式进行项目启动与项目结束
+  - deploy>utils>utils.py 为工具方法，任何python2项目都适合使用
 
 > ### sql
 

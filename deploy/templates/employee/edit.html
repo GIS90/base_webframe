@@ -4,7 +4,7 @@
 
 {% block navbar %}
 <section class="content-header" xmlns="http://www.w3.org/1999/html">
-        {% if is_add == '1' %}<h1 style="float:left">新增</h1>{% else %}<h1 style="float:left">编辑</h1>{% endif %}
+        {% if params.is_add == '1' %}<h1 style="float:left">新增</h1>{% else %}<h1 style="float:left">编辑</h1>{% endif %}
         <div style="margin-left: 4em;margin-top: 0.2em;">(<span style="color: red;">*</span> 为必填信息)</div>
 
     <ol class="breadcrumb">
@@ -38,7 +38,7 @@
                         <label style='margin-left:3em;'><span class='info_red'>* </span>中文姓名 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='china_name' type="text" name='china_name' maxlength='20' class="info_input"
-                                   value='{{ em_profile.china_name or '' }}'
+                                   value='{{ params.em_profile.china_name or '' }}'
                                    required='required' placeholder='身份证姓名'
                             />
                         </span>
@@ -47,7 +47,7 @@
                         <label style='margin-left:3em;'>英文姓名 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='english_name' type="text" name='english_name' maxlength='20' class="info_input"
-                                   value='{{ em_profile.english_name or '' }}'
+                                   value='{{ params.em_profile.english_name or '' }}'
                             />
                         </span>
                     </div>
@@ -57,7 +57,7 @@
                         <label style='margin-left:3em;'><span class='info_red'>* </span>电&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp话 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='phone' type="text" name='phone' maxlength='20' class="info_input"
-                                   value='{{ em_profile.phone or '' }}' oninput="value=value.replace(/[^\d]/g,'')"
+                                   value='{{ params.em_profile.phone or '' }}' oninput="value=value.replace(/[^\d]/g,'')"
                                    required='required'
                             />
                         </span>
@@ -66,7 +66,7 @@
                         <label style='margin-left:3em;'>邮&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp箱 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='email' type="email" name='email' maxlength='20' class="info_input"
-                                   value='{{ em_profile.email or '' }}'
+                                   value='{{ params.em_profile.email or '' }}'
                             />
                         </span>
                     </div>
@@ -75,7 +75,7 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='entry_date' type="date" required="required"
                                    class="info_input" name="entry_date"
-                                   value='{{ em_profile.entry_date or '' }}'/>
+                                   value='{{ params.em_profile.entry_date or '' }}'/>
                         </span>
                     </div>
                 </div>
@@ -85,8 +85,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id='sex' name="sex" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('sex') %}
-                                    <option value='{{item}}'>{{enums['sex'].get(item)}}</option>
+                                {% for item in params.enums.get('sex') %}
+                                    {% if params.em_profile.sex == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['sex'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['sex'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -96,8 +100,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id="nation" name="nation" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('nation') %}
-                                    <option value='{{item}}'>{{enums['nation'].get(item)}}</option>
+                                {% for item in params.enums.get('nation') %}
+                                    {% if params.em_profile.nation == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['nation'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['nation'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -107,7 +115,7 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='birth_date' type="date" required="required"
                                    class="info_input" name="birth_date"
-                                   value='{{ em_profile.birth_date or '' }}'/>
+                                   value='{{ params.em_profile.birth_date or '' }}'/>
                         </span>
                     </div>
                 </div>
@@ -117,8 +125,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id='political_status' name="political_status" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('political_status') %}
-                                    <option value='{{item}}'>{{enums['political_status'].get(item)}}</option>
+                                {% for item in params.enums.get('political_status') %}
+                                    {% if params.em_profile.political_status == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['political_status'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['political_status'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -128,8 +140,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id="nationality" name="nationality" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('nationality') %}
-                                    <option value='{{item}}'>{{enums['nationality'].get(item)}}</option>
+                                {% for item in params.enums.get('nationality') %}
+                                    {% if params.em_profile.nationality == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['nationality'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['nationality'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -139,8 +155,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id="residence_type" name="residence_type" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('residence_type') %}
-                                    <option value='{{item}}'>{{enums['residence_type'].get(item)}}</option>
+                                {% for item in params.enums.get('residence_type') %}
+                                    {% if params.em_profile.residence_type == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['residence_type'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['residence_type'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -152,8 +172,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id="marriage" name="marriage" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('marriage') %}
-                                    <option value='{{item}}'>{{enums['marriage'].get(item)}}</option>
+                                {% for item in params.enums.get('marriage') %}
+                                    {% if params.em_profile.marriage == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['marriage'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['marriage'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -163,8 +187,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id="education" name="education" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('education') %}
-                                    <option value='{{item}}'>{{enums['education'].get(item)}}</option>
+                                {% for item in params.enums.get('education') %}
+                                    {% if params.em_profile.education == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['education'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['education'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -176,8 +204,12 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <select id="card_type" name="card_type" required="required" class="info_select">
                                 <option value="">请选择</option>
-                                {% for item in enums.get('card_type') %}
-                                    <option value='{{item}}'>{{enums['card_type'].get(item)}}</option>
+                                {% for item in params.enums.get('card_type') %}
+                                    {% if params.em_profile.card_type == item %}
+                                        <option value='{{item}}' selected="selected">{{params.enums['card_type'].get(item)}}</option>
+                                    {% else %}
+                                        <option value='{{item}}'>{{params.enums['card_type'].get(item)}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </span>
@@ -186,7 +218,7 @@
                         <label style='margin-left:2.4em'><span class='info_red'>* </span>证件号码 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
                             <input id='card_id' type="text" name='card_id' maxlength='20' class="info_input"
-                                   value='{{ em_profile.card_id or '' }}'
+                                   value='{{ params.em_profile.card_id or '' }}'
                                    required='required'
                             />
                         </span>
@@ -196,7 +228,7 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <input type="date" class="info_input" id="card_deadline"
                                    required="required" name="card_deadline"
-                                   value='{{ em_profile.card_deadline or '' }}'/>
+                                   value='{{ params.em_profile.card_deadline or '' }}'/>
                         </span>
                     </div>
                 </div>
@@ -206,7 +238,7 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <input type="text" id='card_place' required="required"
                                    style="width:450px;" class="info_input" name='card_place'
-                                   value='{{ em_profile.card_place or '' }}'
+                                   value='{{ params.em_profile.card_place or '' }}'
                             />
                         </span>
 
@@ -218,7 +250,7 @@
                         <span style='position:relative;margin-left:0.5em;'>
                             <input type="text" id='current_address' required="required"
                                    style="width:450px;" class="info_input" name='current_address'
-                                   value='{{ em_profile.current_address or '' }}'
+                                   value='{{ params.em_profile.current_address or '' }}'
                                    placeholder="请省、市、区、街(小区)、门牌号顺序填写"
                             />
                         </span>
@@ -232,10 +264,14 @@
                 <div class='row info_main_tab'>
                     <label style='margin-left:20em'><span class='info_red'>* </span>开户行 : </label>
                     <span style='position:relative;margin-left:1em;'>
-                        <select id="bank_type" name="bank_type" required="required" class="info_select">
+                        <select id="bank_type" name="bank_type" required="required" class="info_bank_select">
                             <option value="">请选择</option>
-                            {% for item in enums.get('bank_type') %}
-                                <option value='{{item}}'>{{enums['bank_type'].get(item)}}</option>
+                            {% for item in params.enums.get('bank_type') %}
+                                {% if params.em_profile.bank_type == item %}
+                                    <option value='{{item}}' selected="selected">{{params.enums['bank_type'].get(item)}}</option>
+                                {% else %}
+                                    <option value='{{item}}'>{{params.enums['bank_type'].get(item)}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </span>
@@ -243,10 +279,14 @@
                 <div class='row info_main_tab'>
                     <label style='margin-left:18em'><span class='info_red'>* </span>开户行国家 : </label>
                     <span style='position:relative;margin-left:1em;'>
-                        <select id="bank_country" name="bank_country" required="required" class="info_select">
+                        <select id="bank_country" name="bank_country" required="required" class="info_bank_select">
                             <option value="">请选择</option>
-                            {% for item in enums.get('bank_country') %}
-                                <option value='{{item}}'>{{enums['bank_country'].get(item)}}</option>
+                            {% for item in params.enums.get('bank_country') %}
+                                {% if params.em_profile.bank_country == item %}
+                                    <option value='{{item}}' selected="selected">{{params.enums['bank_country'].get(item)}}</option>
+                                {% else %}
+                                    <option value='{{item}}'>{{params.enums['bank_country'].get(item)}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                         <span class='info_red' style="margin-left: 1em">(请确认开户行与工资卡号为同一银行)</span>
@@ -255,11 +295,11 @@
                 <div class='row info_main_tab'>
                     <label style='margin-left:18.8em'><span class='info_red'>* </span>开户城市 : </label>
                     <span style='position:relative;margin-left:1em;'>
-                        <input type="text" list="city_list" id="bank_city"
-                               class="info_select" required="required" name="bank_city"/>
+                        <input type="text" list="city_list" id="bank_city" value="{{params.em_profile.bank_city or ''}}"
+                               class="info_bank_select" required="required" name="bank_city"/>
                         <datalist id="city_list">
-                            {% for item in enums.get('bank_city') %}
-                                <option value='{{enums['bank_city'].get(item)}}'></option>
+                            {% for item in params.enums.get('bank_city') %}
+                                <option value='{{params.enums['bank_city'].get(item)}}'></option>
                             {% endfor %}
                         </datalist>
                     </span>
@@ -267,9 +307,9 @@
                 <div class='row info_main_tab'>
                     <label style='margin-left:18.8em'><span class='info_red'>* </span>工资卡号 : </label>
                     <span style='position:relative;margin-left:1em;'>
-                        <input type="text" value="{{em_profile.bank_id or ''}}"
+                        <input type="text" value="{{params.em_profile.bank_id or ''}}"
                                maxlength='30' name="bank_id" required="required"
-                               class="info_input" id="bank_id"
+                               class="info_bank_select" id="bank_id"
                                oninput="value=value.replace(/[^\d]/g,'')"
                         />
                     </span>
@@ -277,9 +317,9 @@
                 <div class='row info_main_tab'>
                     <label style='margin-left:18.8em'><span class='info_red'>* </span>开户姓名 : </label>
                     <span style='position:relative;margin-left:1em;'>
-                        <input type="text" value="{{em_profile.bank_name or ''}}"
+                        <input type="text" value="{{params.em_profile.bank_name or ''}}"
                                maxlength='30' name="bank_name" required="required"
-                                class="info_input" id="bank_name"
+                               class="info_bank_select" id="bank_name"
                         />
                     </span>
                 </div>
@@ -288,8 +328,8 @@
         <div style="margin-top: 6%;">
             <p style='text-align: center' class='red'>*以上所填各项资料均属实，授权公司对于所填内容进行核实，今后一旦发现有虚假信息，同意立即解除劳动合同且无任何经济补偿</p>
             <p style='text-align: center' class='red'>*本人承诺在职期间，以上资料如有变更，将在3个工作日内书面通知公司人力资源部，否则因此引起的任何责任，将由本人承担</p>
-            <input type="hidden" name='status' id='status' value='{{em_profile.status or '1'}}'/>
-            <input type="hidden" name='is_add' id='is_add' value='{{em_profile.is_add or '1'}}'/>
+            <input type="hidden" name='status' id='status' value='{{params.em_profile.status or 1}}'/>
+            <input type="hidden" name='is_add' id='is_add' value='{{params.is_add or 1}}'/>
             <div  style="text-align:center; width:100%;height:30%;margin:0px;">
                 <button type="submit" id="info_submit" name="info_submit"
                         class="info_submit" onclick="form_subimt()">提交</button>
@@ -311,7 +351,7 @@
         onclick: null,
         showDuration: "300",
         hideDuration: "1000",
-        timeOut: "1600",
+        timeOut: "2000",
         extendedTimeOut: "1000",
         showEasing: "swing",
         hideEasing: "linear",
@@ -377,24 +417,24 @@
             success: function (json_result) {
                 var message = json_result.msg;
                 if (json_result.status_id === 100){
-                    toastr.success("温馨提示：", message);
-                    window.location.href = window.location.href;
-                }else {
-                    toastr.error("温馨提示：", message);
+                    toastr.success(message, "温馨提示：");
+                    setTimeout(function(){
+                        window.location.href = window.location.href;
+                    }, 2000);
+                }else if(json_result.status_id === 110){
+                    toastr.success(message, "温馨提示：");
+                }else{
+                    toastr.error(message, "温馨提示：");
                 }
 
             },
             error: function (result) {
                 console.log('add data is error: '+ result);
-                toastr.error("温馨提示：", "服务端发生故障，新增失败！");
+                toastr.error("服务端发生故障，新增失败！", "温馨提示：");
             }
         });
 
     }
-
-    function tiaozhuan(){
-        window.location.href = window.location.href;
-    };
 
     // 银行卡号
     !function () {

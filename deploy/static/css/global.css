@@ -207,6 +207,13 @@
     text-align-last: center;
 }
 
+.info_bank_select{
+    width: 240px;
+    height: 30px;
+    text-align: center;
+    text-align-last: center;
+}
+
 .info_submit{
     width: 90px;
     height: 35px;
@@ -220,4 +227,16 @@
     vertical-align: middle;
     border: 1px solid transparent;
     font-weight: 900;
+}
+
+.info_oper_btn_edit{
+    margin: 0 0 3px 0;
+    display:inline;
+    width:70%
+}
+
+.info_oper_btn_del{
+    margin: 3px 0 0 0;
+    display:inline;
+    width:70%
 }

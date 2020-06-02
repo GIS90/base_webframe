@@ -25,6 +25,7 @@ from functools import wraps
 from flask import session, render_template
 from deploy.utils.status import Status
 from deploy.services.sysuser import SysUserService
+from deploy.utils.logger import logger as LOG
 
 
 # get current folder, solve is or not frozen of the script
@@ -133,3 +134,16 @@ def get_cur_user():
         return render_template("login.html",
                                login_message='')
     return user
+
+
+# 计时器
+def timeer(fn):
+    @wraps(fn)
+    def _wrapper(*args, **kwargs):
+        start = datetime.now()
+        res = fn(*args, **kwargs)
+        end = datetime.now()
+        LOG.info('@timeer %s is run: %s' % (fn.__name__, (end-start).seconds))
+        return res
+
+    return _wrapper

@@ -46,6 +46,22 @@
 {% block scripts %}
 
 <script>
+    toastr.options = {
+        closeButton: false,
+        debug: false,
+        progressBar: true,
+        positionClass: "toast-top-center",
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "1600",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+
     function initPage() {
         $('#info_all_employee').DataTable({
             paging: true, //关闭页码
@@ -59,7 +75,7 @@
                 {type: 'numeric-comma', targets: [2,3,4,5,6,7,8]}
             ],
             bInfo: true, //是否开启页码底端信息，总条数
-            bAutoWidth: false, //是否自动计算列宽
+            bAutoWidth: true, //是否自动计算列宽
             bDeferRender: true, // 是否延迟渲染，当用Ajax或者js方式加载数据时开启延迟渲染会带来很大的速度提升，
             // 当该属性设置为true时，表格每一行新增的元素只有在需要被画出来时才会被DataTable创建出来
             serverSide: true,
@@ -72,7 +88,10 @@
             bPaginate: true, //是否显示（应用）分页器
             bFilter: true, //是否启动过滤、搜索功能
             aoColumnDefs: [
-                 { "bSortable": false, "aTargets": [1, 2] }
+                {
+                    "bSortable": false,
+                    "aTargets": [1, 2]
+                }
             ],
 
             ajax: function (data, callback, settings) {
@@ -187,14 +206,46 @@
                     "title": "操作",
                     "className": "info_td_center",
                     "render": function (data, type, row, meta) {
-                        return data = '<button type="button"  style = "margin:0px;display:inline;width:70%" class="btn bt_unpass btn-primary btn-xs" id="dt_pass"><i class="fa fa-check"></i> 编辑 </button>' +
-                        ' <button type="button" style="margin:0px;display:inline;width:70%" class="btn bt_unpass btn-danger btn-xs"  id="dt_unpass"><i class="fa fa-times"></i> 离职 </button>';
+                        return data = '<button id="edit_'+data.card_id+'" onclick="edit('+"'"+data.card_id+"'"+')" type="button" class="btn bt_unpass btn-primary btn-xs info_oper_btn_edit"><i class="fa fa-check"></i> 编辑 </button>' +
+                        ' <button id="del_'+data.card_id+'" onclick="del('+"'"+data.card_id+"'"+')" type="button" class="btn bt_unpass btn-danger btn-xs info_oper_btn_del"><i class="fa fa-times"></i> 离职 </button>';
                     }
                 }
             ]
         });
     }
 
+    function edit(card_id) {
+        window.location.href = '/employee/edit/' + card_id;
+    }
+
+    function del(card_id) {
+        var postJsonData = {
+            "card_id": card_id
+        };
+        $.ajax({
+            url: "/employee/quit_empl/",
+            type: 'POST',
+            contentType: "application/json",
+            dataType:"json",
+            data: JSON.stringify(postJsonData),
+            success: function (json_result) {
+                var message = json_result.msg;
+                if (json_result.status_id === 100){
+                    toastr.success(message, "温馨提示：");
+                    setTimeout(function(){
+                        window.location.href = window.location.href;
+                    }, 2000);
+                }else{
+                    toastr.error(message, "温馨提示：");
+                }
+
+            },
+            error: function (result) {
+                console.log('add data is error: '+ result);
+                toastr.error("服务端发生故障，离职失败！", "温馨提示：");
+            }
+        });
+    }
 
 </script>
 

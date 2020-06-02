@@ -21,12 +21,13 @@
     <script src="plugins/html5shiv.min.js"></script>
     <script src="plugins/respond.min.js"></script>
     <![endif]-->
-    <!-- datatables-->
+    <!-- datatables -->
     <script type="text/javascript" src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <!-- toastr -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/toastr.min.js') }}"></script>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/toastr.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/toastr.min.css') }}">
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -93,7 +94,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{% if menu.sub == 'edit' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_edit') }}"><i class="fa {% if menu.sub == 'edit' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 编辑</a></li>
+                        <li class="{% if menu.sub == 'edit' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_edit', card_id='new') }}"><i class="fa {% if menu.sub == 'edit' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 编辑</a></li>
                         <li class="{% if menu.sub == 'list' %}active {% else %} {% endif %}"><a href="{{ url_for('employee.html_list') }}"><i class="fa {% if menu.sub == 'list' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 浏览</a></li>
                     </ul>
                 </li>
