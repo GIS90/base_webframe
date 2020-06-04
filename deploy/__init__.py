@@ -30,10 +30,13 @@ from flask import (Flask,
 from deploy.utils.base_class import WebBaseClass
 from deploy.utils.logger import logger as LOG
 from deploy.utils.utils import get_user_id
+
 from deploy.views.employee import employee
 from deploy.views.apis import apis
 from deploy.views.manage import manage
 from deploy.views.home import home
+from deploy.views.set import set
+
 from deploy.config import VERSION, NAME, SECRET_KEY
 from deploy.models.base import get_session
 from deploy.services.sysuser import SysUserService
@@ -135,6 +138,7 @@ class WebFlaskServer(WebBaseClass):
         self.register_blueprint('apis', apis)
         self.register_blueprint('manage', manage)
         self.register_blueprint('home', home)
+        self.register_blueprint('set', set)
 
     def init_run(self):
         LOG.debug('Server is initializing......')

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}子页面标题{% endblock %}
+
+{% block navbar %}
+<section class="content-header">
+    <h1>子页面说明</h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> 当前位置</li>
+        <li class="active">子页面一级功能</li>
+        <li class="active">子页面二级功能</li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+<div>
+    子页面内容
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    toastr.options = {
+        closeButton: false,
+        debug: false,
+        progressBar: true,
+        positionClass: "toast-top-center",
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "1600",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+
+    function initPage() {
+        console.log('==============template initPage')
+    }
+
+</script>
+
+{% endblock %}
