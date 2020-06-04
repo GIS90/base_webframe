@@ -7,6 +7,7 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
   - mysql 数据库
   - gunicorn web服务与进程
   - supervisor 项目启动、停止、重启等操作
+
 项目主要运行于Linux系统上，本人使用Centos7.0
 
 > ### 配置说明
@@ -48,10 +49,13 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
 > ### 管理gunicorn
 
 负责web项目进程、服务
+
 安装：pip install gunicorn
+
 配置：
   - dev：etc/dev/gunicorn.conf
   - prod：etc/prod/gunicorn.conf
+
 如需特别项目启动信息，可以加入gunicorn.conf或者更改命令行gunicorn启动方式加入参数即可
 
 > ### 其他
@@ -62,13 +66,17 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
 > ### sql
 
 创建sql：deploy>sql>table_create_sql.sql，直接执行即可
+
 插入sql：deploy>sql>print_insert_sql.py，具体需要哪些insert的数据，看代码，根据需要插入
 
 > ### 手动启动
 
 项目根目录wsgi.py文件加入
+
 app.run(host="0.0.0.0", port=11111, debug=True)
+
 执行python wsgi.py，代码目前已写入，处于注释状态
+
 如果手动启动模式开启，在gunicorn进行启动，会error: [Errno 48] Address already in use.
 
 > ### 联系方式
