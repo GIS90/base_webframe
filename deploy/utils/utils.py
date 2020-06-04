@@ -147,3 +147,5 @@ def timeer(fn):
         return res
 
     return _wrapper
+
+print get_now()

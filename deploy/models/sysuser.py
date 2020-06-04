@@ -36,5 +36,6 @@ class SysUserModel(base.ModelBase):
     password = Column(String(254))
     email = Column(String(50))
     phone = Column(String(50))
+    image = Column(String(254))
     is_admin = Column(Boolean())
 

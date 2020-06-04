@@ -23,8 +23,8 @@ import random
 def print_sysuser():
     # insert sysuser
     print """
-insert into sysuser(rtx_id, fullname,password,email ,phone,is_admin) 
-VALUES('admin', '系统管理员', '1', 'xxxxxx@163.com', '13011112222', 1);
+insert into sysuser(rtx_id, fullname, password, email , phone, image, is_admin) 
+VALUES('admin', '系统管理员', '1', 'gaomingliang971366@163.com', '1', 'uploads/20200604/avatar.jpg', 1);
     """
 
 

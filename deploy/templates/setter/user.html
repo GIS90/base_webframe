@@ -14,14 +14,19 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    子页面内容
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title" style="float:left">全职职工浏览</h3>
+        <div>(按<span class="info_red">入职时间</span>排序)</div>
+    </div>
 </div>
+
 {% endblock %}
 
 {% block scripts %}
 
 <script>
+    // info success warning error
     toastr.options = {
         closeButton: false,
         debug: false,
@@ -39,7 +44,7 @@
     };
 
     function initPage() {
-        console.log('==============template initPage')
+        console.log('==============user template initPage')
     }
 
 </script>

@@ -35,7 +35,7 @@ from deploy.views.employee import employee
 from deploy.views.apis import apis
 from deploy.views.manage import manage
 from deploy.views.home import home
-from deploy.views.set import set
+from deploy.views.setter import setter
 
 from deploy.config import VERSION, NAME, SECRET_KEY
 from deploy.models.base import get_session
@@ -105,9 +105,9 @@ class WebFlaskServer(WebBaseClass):
             user_id = session.get('user_id')
             menu = current_user = dict()
             if hasattr(g, 'menuf'):
-                menu['f'] = g.menuf
+                menu['f'] = g.menuf or 'index'
             if hasattr(g, 'menusub'):
-                menu['sub'] = g.menusub
+                menu['sub'] = g.menusub or 'index'
             if user_id:
                 current_user = SysUserService().get_user_by_params(user_id)
 
@@ -138,7 +138,7 @@ class WebFlaskServer(WebBaseClass):
         self.register_blueprint('apis', apis)
         self.register_blueprint('manage', manage)
         self.register_blueprint('home', home)
-        self.register_blueprint('set', set)
+        self.register_blueprint('setter', setter)
 
     def init_run(self):
         LOG.debug('Server is initializing......')

@@ -18,13 +18,15 @@ DROP TABLES IF EXISTS `sysuser`;
 
 CREATE TABLE `sysuser` (
 	`id` int NOT NULL AUTO_INCREMENT,
-	`rtx_id` varchar(30),
-	`fullname` varchar(50),
-	`password` varchar(50),
-	`email` varchar(50),
-	`phone` varchar(30),
-	`is_admin` bool,
-	PRIMARY KEY (`id`)
+	`rtx_id` varchar(30) not null COMMENT 'rtx标识',
+	`fullname` varchar(50) not null COMMENT '名称',
+	`password` varchar(50) not null COMMENT '密码',
+	`email` varchar(50)  COMMENT '邮箱',
+	`phone` varchar(30)  COMMENT '电话',
+	`image` varchar(255)  COMMENT '头像',
+	`is_admin` bool  COMMENT '是否管理员权限',
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX phone(id ASC),
 ) COMMENT='';
 
 
@@ -66,7 +68,9 @@ CREATE TABLE `blog`.`employee` (
 	`last_update_time` timestamp COMMENT '最后更新日期',
 	`last_update_rtx` varchar(30) COMMENT '最后更新用户',
 
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+    UNIQUE INDEX phone(id ASC),
+	UNIQUE INDEX card_id(id ASC)
 ) COMMENT='';
 
 	PRIMARY KEY (`id`)

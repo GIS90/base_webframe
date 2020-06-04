@@ -21,11 +21,11 @@ from flask import Blueprint, g, \
 from deploy.utils.logger import logger as LOG
 
 
-set = Blueprint('set', __name__)
+setter = Blueprint('setter', __name__, url_prefix='/setter')
 
 
-@set.route('/set/user/', methods=['GET', 'POST'])
+@setter.route('/user/', methods=['GET', 'POST'])
 def user_html():
-    g.menuf = 'set'
+    g.menuf = 'setter'
     g.menusub = 'user'
-    return render_template('set/user.html')
+    return render_template('setter/user.html')

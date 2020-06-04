@@ -25,10 +25,10 @@ from deploy.utils.status import Status
 from deploy.utils.utils import timeer
 
 
-employee = Blueprint('employee', __name__)
+employee = Blueprint('employee', __name__, url_prefix='/employee')
 
 
-@employee.route('/employee/edit/<string:card_id>', methods=['GET', 'POST'])
+@employee.route('/edit/<string:card_id>', methods=['GET', 'POST'])
 @timeer
 def html_edit(card_id):
     g.menuf = 'info'
@@ -48,7 +48,7 @@ def html_edit(card_id):
                            params=params)
 
 
-@employee.route('/employee/add_or_edit_api/', methods=['GET', 'POST'])
+@employee.route('/add_or_edit_api/', methods=['GET', 'POST'])
 def add_or_edit_api():
     if request.method == 'GET':
         return Status(
@@ -70,14 +70,14 @@ def add_or_edit_api():
     return res
 
 
-@employee.route('/employee/list/')
+@employee.route('/list/')
 def html_list():
     g.menuf = 'info'
     g.menusub = 'list'
     return render_template('employee/list.html')
 
 
-@employee.route('/employee/api_list/', methods=['GET', 'POST'])
+@employee.route('/api_list/', methods=['GET', 'POST'])
 @timeer
 def api_list_all():
     if request.method == 'GET':
@@ -100,7 +100,7 @@ def api_list_all():
     return res
 
 
-@employee.route('/employee/quit_empl/', methods=['GET', 'POST'])
+@employee.route('/quit_empl/', methods=['GET', 'POST'])
 @timeer
 def quit_empl():
     if request.method == 'GET':

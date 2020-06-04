@@ -61,6 +61,7 @@ def login_in():
         if not is_register_user:
             return render_template("login.html",
                                    login_message='账户未注册')
+        # 支持用户id、phone、email登录
         user = SysUserService().check_user(user_id, user_pwd)
         if not user:
             return render_template("login.html",

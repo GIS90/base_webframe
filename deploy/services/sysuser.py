@@ -22,7 +22,7 @@ class SysUserService(object):
     def __init__(self):
         super(SysUserService, self).__init__()
         self.sysuser_bo = SysUserBo()
-        self.attrs = ['id', 'rtx_id', 'fullname',
+        self.attrs = ['id', 'rtx_id', 'fullname', 'image',
                       'password', 'email', 'phone', 'is_admin']
 
     def get_user_by_params(self, user_id):
@@ -48,6 +48,8 @@ class SysUserService(object):
                     user_res[attr] = user.phone
                 elif attr == 'is_admin':
                     user_res[attr] = user.is_admin
+                elif attr == 'image':
+                    user_res[attr] = user.image
 
         return user_res
 

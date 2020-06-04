@@ -23,10 +23,10 @@ from deploy.utils.status import Status
 
 from deploy.services.employee import EmployeeService
 
-home = Blueprint('home', __name__)
+home = Blueprint('home', __name__, url_prefix='/home')
 
 
-@home.route('/home/summary/')
+@home.route('/summary/')
 def summary():
     cur_date = get_now(format="%Y-%m-%d")
     employee_count = EmployeeService().get_count(status=1)
