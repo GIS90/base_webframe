@@ -4,21 +4,72 @@
 
 {% block navbar %}
 <section class="content-header">
-    <h1>子页面说明</h1>
+    <h1>
+        <span class="info_red">{{ current_user.fullname }}</span>
+    </h1>
+
     <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> 当前位置</li>
-        <li class="active">子页面一级功能</li>
-        <li class="active">子页面二级功能</li>
+        <li class="active">系统设置</li>
+        <li class="active">个人中心</li>
     </ol>
 </section>
 {% endblock %}
 
 {% block content %}
+
 <div class="box box-primary">
     <div class="box-header">
-        <h3 class="box-title" style="float:left">全职职工浏览</h3>
-        <div>(按<span class="info_red">入职时间</span>排序)</div>
+        <h3 class="box-title" style="float:left">欢迎来到个人中心</h3>
+        <div>（<span class="info_red">用户ID</span>不可更改）</div>
     </div>
+    <div class="box-body">
+
+        <div class="col-xs-4 col-sm-2 margin set_user_avatar">
+            <form id ="form-avatar" method='POST'
+                  target="iframe-avatar-post" enctype="multipart/form-data">
+                <span class="set_user_profile_picture text-center">
+                    <img id="avatar" class="editable img-responsive set_user_avatar_img"
+                         src="{{ current_user.image }}" />
+                </span>
+                <div class="space-4"></div>
+                <div>
+                    <div class="set_user_avatar_row">
+                        <a href="mailto:{{current_user.email}}"><i class="fa fa-envelope"></i>&nbsp&nbsp&nbsp&nbsp发邮件给Ta</a>
+                    </div>
+                    <div class="set_user_avatar_row set_user_avatar_file">
+                        <a>
+                            <i class="fa fa-picture-o"></i>
+                            &nbsp&nbsp&nbsp<input style="float: right" type="file" accept="image/*" name="file" id="file"/>
+                        </a>
+                    </div>
+                    <input type="button" value="提交" class="set_user_avatar_submit" onclick="submit_avatar()"/>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-xs-6 margin profile_box" style="display: inline">
+            <div>
+                <h2>{{current_user.rtx_id}}</h2>
+                <div class="row profile_box_row">
+                    <div class="text-muted set_user_content_label">名称：</div>
+                    <div>{{ current_user.fullname }}</div>
+                </div>
+                <div class="row profile_box_row">
+                    <div class="text-muted set_user_content_label">电话：</div>
+                    <div>{{ current_user.phone }}</div>
+                </div>
+                <div class="row profile_box_row">
+                    <div class="text-muted set_user_content_label">邮箱：</div>
+                    <div>{{ current_user.email }}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<iframe name="iframe-avatar-post" id="iframe-avatar-post" style="display:none;"></iframe>
+
 </div>
 
 {% endblock %}
@@ -35,7 +86,7 @@
         onclick: null,
         showDuration: "300",
         hideDuration: "1000",
-        timeOut: "1600",
+        timeOut: "2000",
         extendedTimeOut: "1000",
         showEasing: "swing",
         hideEasing: "linear",
@@ -43,10 +94,76 @@
         hideMethod: "fadeOut"
     };
 
+    // 监听图片change
+    var fileDom = document.getElementById("file");
+    var previewDom = document.getElementById("avatar");
+    fileDom.addEventListener("change", e=>{
+        var file = fileDom.files[0];
+        // check if input contains a valid image file
+        if (!file || file.type.indexOf("image/") < 0) {
+            fileDom.value = "";
+            previewDom.src = "";
+            return;
+        }
+
+        // use FileReader to load image and show preview of the image
+        var fileReader = new FileReader();
+        fileReader.onload = e=>{
+            previewDom.src = e.target.result;
+        };
+        fileReader.readAsDataURL(file);
+    });
+
+    function submit_avatar() {
+        // check
+        var fileDom = document.getElementById("file");
+        var file = fileDom.files[0];
+        if (!file){
+            toastr.warning("请先选择图片", "温馨提示：");
+            return false;
+        }
+        if (!file || file.type.indexOf("image/") < 0) {
+            toastr.warning("请选择正确图片格式：.jpg、.png等", "温馨提示：");
+            return false;
+        }
+        var fileSize = (file.size / 1024).toFixed(0);
+        if (fileSize > 1024 * 2) {
+            toastr.warning("上传文件超出限制大小，图片最大为2M", "温馨提示：");
+            return false;
+        }
+
+        var formData = new FormData();
+        formData.append('avatar', document.getElementById('file').files[0]);
+
+        $.ajax({
+            url: "/setter/upload_image/",
+            type:"post",
+            data: formData,
+            contentType: false,
+            processData: false,
+            async:false,
+            success: function (result) {
+                var json_result = JSON.parse(result);
+                console.log(json_result)
+                if (json_result.status_id == 100){
+                    big = document.getElementById('base_user_image_big');
+                    small = document.getElementById('base_user_image_small');
+                    big.src = json_result.data.image;
+                    small.src = json_result.data.image;
+                    toastr.success(json_result.msg, "温馨提示：");
+                } else{
+                    toastr.error(json_result.msg, "温馨提示：");
+                }
+            },
+            error: function (result) {
+                console.log('upload avatar image is error: '+ result);
+                toastr.error("服务端发生故障，上传失败！", "温馨提示：");
+            }
+        });
+    }
+
     function initPage() {
-        console.log('==============user template initPage')
     }
 
 </script>
-
 {% endblock %}

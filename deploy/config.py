@@ -73,6 +73,9 @@ MAIL_USE_SSL = None
 MAIL_USERNAME = None
 MAIL_PASSWORD = None
 
+# files
+UPLOAD_BASE_DIR = '/static/upload/'
+
 
 """
 enrty: initializate config
@@ -113,3 +116,6 @@ with open(_config_file) as f:
     MAIL_USE_SSL = _config_info['MAIL']['MAIL_USE_SSL'] or MAIL_USE_SSL
     MAIL_USERNAME = _config_info['MAIL']['MAIL_USERNAME'] or MAIL_USERNAME
     MAIL_PASSWORD = _config_info['MAIL']['MAIL_PASSWORD'] or MAIL_PASSWORD
+
+    # files
+    UPLOAD_BASE_DIR = _config_info['FILES']['UPLOAD_BASE_DIR'] or UPLOAD_BASE_DIR

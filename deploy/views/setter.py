@@ -19,6 +19,9 @@ from flask import Blueprint, g, \
     render_template, request
 
 from deploy.utils.logger import logger as LOG
+from deploy.utils.status import Status
+from deploy.utils.utils import timeer, get_user_id
+from deploy.services.setter import SetterService
 
 
 setter = Blueprint('setter', __name__, url_prefix='/setter')
@@ -29,3 +32,22 @@ def user_html():
     g.menuf = 'setter'
     g.menusub = 'user'
     return render_template('setter/user.html')
+
+
+@setter.route('/upload_image/', methods=['POST'])
+@timeer
+def upload_image():
+    image = request.files.get('avatar')
+    if not image:
+        return Status(
+                200,
+                'failure',
+                u'请先上传图片',
+                {}
+                ).json()
+
+    g.menuf = 'setter'
+    g.menusub = 'user'
+    LOG.info('%s update image' % get_user_id())
+    return SetterService().upload_image(image)
+

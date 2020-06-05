@@ -46,13 +46,13 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="/static/{{ current_user.image }}" class="user-image"
-                                 alt="User Image">
+                            <img src="{{ current_user.image }}" class="user-image"
+                                 alt="User Image" id="base_user_image_small">
                             <span class="hidden-xs">{{current_user.rtx_id}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="/static/{{ current_user.image }}"
+                                <img src="{{ current_user.image }}" id="base_user_image_big"
                                      class="img-circle" alt="User Image">
                                 <p>
                                     <span>{{ current_user.fullname }}</span>

@@ -17,7 +17,7 @@
 <div class="box box-primary">
     <div class="box-header">
         <h3 class="box-title" style="float:left">全职职工浏览</h3>
-        <div>(按<span class="info_red">入职时间</span>排序)</div>
+        <div>（按<span class="info_red">入职时间</span>排序）</div>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -230,7 +230,7 @@
             data: JSON.stringify(postJsonData),
             success: function (json_result) {
                 var message = json_result.msg;
-                if (json_result.status_id === 100){
+                if (json_result.status_id == 100){
                     toastr.success(message, "温馨提示：");
                     setTimeout(function(){
                         window.location.href = window.location.href;

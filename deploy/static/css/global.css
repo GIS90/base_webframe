@@ -159,7 +159,7 @@
     /*border-radius: 5px;*/
 }
 
-.login_submit{
+.login_submit {
     width: 90%;
     margin-left: 5%;
     margin-right: auto;
@@ -170,51 +170,51 @@
     border-radius: 25px;
 }
 
-.login_warning{
+.login_warning {
     width: 90%;
     margin-left: 5%;
 }
 
-.info_td_center{
+.info_td_center {
     text-align: center;
     /*font-size: 14px;*/
 }
 
-.info_red{
-    color:red!important
+.info_red {
+    color: red !important
 }
 
-.info_main_tab{
+.info_main_tab {
     margin: 20px 0 24px 0;
 }
 
-.info_input{
+.info_input {
     width: 160px;
     height: 30px;
 }
 
-.info_input_date{
-    width: 160px;
-    height: 30px;
-    text-align: center;
-    text-align-last: center;
-}
-
-.info_select{
+.info_input_date {
     width: 160px;
     height: 30px;
     text-align: center;
     text-align-last: center;
 }
 
-.info_bank_select{
+.info_select {
+    width: 160px;
+    height: 30px;
+    text-align: center;
+    text-align-last: center;
+}
+
+.info_bank_select {
     width: 240px;
     height: 30px;
     text-align: center;
     text-align-last: center;
 }
 
-.info_submit{
+.info_submit {
     width: 90px;
     height: 35px;
     font-size: 14px;
@@ -229,14 +229,88 @@
     font-weight: 900;
 }
 
-.info_oper_btn_edit{
+.info_oper_btn_edit {
     margin: 0 0 3px 0;
-    display:inline;
-    width:70%
+    display: inline;
+    width: 70%
 }
 
-.info_oper_btn_del{
+.info_oper_btn_del {
     margin: 3px 0 0 0;
-    display:inline;
-    width:70%
+    display: inline;
+    width: 70%
+}
+
+.set_user_avatar {
+    width: 35%;
+    margin-left: 50px;
+    display: inline;
+    position: relative;
+    overflow: hidden;
+}
+
+.set_user_profile_picture {
+    height: 300px;
+    width: 100%;
+    border: 4px solid #f39c12;
+    background-color: #FFF;
+    padding: 6px;
+    display: inline-block;
+    max-width: 100%;
+    -moz-box-sizing: border-box;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.set_user_avatar_img {
+    width: 100%;
+    height: 100%;
+}
+
+.set_user_content_label {
+    float: left;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.space-4 {
+    max-height: 1px;
+    min-height: 1px;
+    overflow: hidden;
+    margin: 4px 0 3px;
+}
+
+.profile_box {
+    margin-left: 30px;
+}
+
+.profile_box_row {
+    margin-top: 6%;
+}
+
+.set_user_avatar_i {
+    margin-top: 20px;
+}
+
+.set_user_avatar_row {
+    margin-left: 15%;
+    margin-top: 4%;
+}
+
+.set_user_avatar_submit {
+    margin-top: 5%;
+    margin-left: 40%;
+    margin-bottom: 5px;
+    width: 100px;
+    height: 36px;
+    line-height: 18px;
+    font-size: 14px;
+    color: #FFF;
+    background-color: #1b84d8;
+    padding-bottom: 4px;
+    /*border-radius:9px;*/
+    border: 1px solid #868686;;
+}
+
+.set_user_avatar_file {
+    float: left
 }

@@ -148,4 +148,13 @@ def timeer(fn):
 
     return _wrapper
 
-print get_now()
+
+# 建立文件夹（递归）
+def mk_dirs(path):
+    os.makedirs(path)
+    return path
+
+
+# 获取项目base目录（deploy）
+def get_base_dir():
+    return os.path.dirname(get_cur_folder())

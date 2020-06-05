@@ -18,8 +18,6 @@ base_info:
 # usage: /usr/bin/python eumns.py
 # ------------------------------------------------------------
 from deploy.bo.enums import EnumsBo
-from deploy.utils.utils import d2s
-from deploy.utils.status import Status
 
 
 class EnumsService(object):

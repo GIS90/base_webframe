@@ -45,3 +45,6 @@ class SysUserBo(BOBase):
                          SysUserModel.phone == user_id))
         q = q.filter(SysUserModel.password == password)
         return q.first()
+
+    def update_by_rtx(self, rtx_id):
+        pass
