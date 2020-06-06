@@ -103,7 +103,7 @@ Also, make test will automatically use the virtualenv.
     def _create_virtualenv(self):
         if self.check_command_by_which('pip'):
             _print_message("Installing virtualenv via pip......")
-            if self.run_command(['pip', 'install', 'virtualenv'], shell=False) == 0:
+            if self.run_command(['pip', 'install', 'virtualenv==16.7.9'], shell=False) == 0:
                 _print_message("Virtualenv is installing Success.", t="important")
                 return
             else:
