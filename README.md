@@ -21,6 +21,8 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
   - gunicorn：项目启动时所需要的IP、port、log、进程数量等配置
   - supervisor: 项目管理的配置信息
 
+.yaml格式的配置文件是有deploy/config.py进行解析的，如果在config.yaml配置文件中添加配置信息，需要在此文件进行解析添加，建议添加配置默认值
+
 > ### 环境搭建
 
   - Centos7.0系统服务器

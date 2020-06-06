@@ -3,7 +3,8 @@
 """
 ------------------------------------------------
 describe:
-    
+    the class of base model
+    db connection session
 
 usage:
     

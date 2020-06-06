@@ -3,7 +3,7 @@
 """
 ------------------------------------------------
 describe:
-    
+    the model of employee
 
 usage:
     

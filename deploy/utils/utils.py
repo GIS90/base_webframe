@@ -3,7 +3,12 @@
 """
 ------------------------------------------------
 describe:
-    
+    the all collection of daily tools and methods
+    main:
+        path
+        make dir
+        date && time
+        ......
 
 usage:
     

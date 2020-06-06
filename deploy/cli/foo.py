@@ -4,7 +4,9 @@
 """
 --------------------------------------------------------------
 describe:
+    the click of foo
     
+    use to run the separate tasks
 
 base_info:
     __version__ = "v.10"

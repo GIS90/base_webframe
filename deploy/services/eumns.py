@@ -4,7 +4,7 @@
 """
 --------------------------------------------------------------
 describe:
-    
+    the services of enums
 
 base_info:
     __version__ = "v.10"

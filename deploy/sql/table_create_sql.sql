@@ -2,6 +2,11 @@
 describe:
     create table sql
 
+    tables:
+        sysuser
+        enums
+        employee
+
 usage:
 
 

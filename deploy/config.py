@@ -4,7 +4,14 @@
 """
 --------------------------------------------------------------
 describe:
-    analyse to the config of yaml formatter
+    the run configuration information of the project
+    use analyse to the config of yaml formatter
+    information:
+        - SERVER
+        - LOG
+        - DB
+        - MAIL
+        - FILES: upload file or ...
 
 base_info:
     __version__ = "v.10"
@@ -75,7 +82,7 @@ MAIL_USERNAME = None
 MAIL_PASSWORD = None
 
 # files
-UPLOAD_BASE_DIR = '/static/upload/'
+UPLOAD_BASE_DIR = '/static/uploads/'
 
 
 """

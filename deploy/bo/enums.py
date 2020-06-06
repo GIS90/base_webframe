@@ -4,7 +4,7 @@
 """
 --------------------------------------------------------------
 describe:
-    
+    the db interact services of enmus
 
 base_info:
     __version__ = "v.10"

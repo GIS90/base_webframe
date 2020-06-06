@@ -4,7 +4,12 @@
 """
 --------------------------------------------------------------
 describe:
+    the table of insert sql
     
+    tables:
+        sysuser
+        enums
+        employee
 
 base_info:
     __version__ = "v.10"

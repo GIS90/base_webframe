@@ -5,6 +5,9 @@
 --------------------------------------------------------------
 describe:
     WebFlaskServer initialize 
+    flask app and blueprint collections
+    
+    Singleton mode
 
 base_info:
     __version__ = "v.10"
@@ -123,7 +126,7 @@ class WebFlaskServer(WebBaseClass):
     def register_blueprint(self, obj_n, obj):
         """
         view blueprint register
-        :param obj: blueprint object
+        :param obj_n: blueprint object
         :param obj: blueprint name
         :return: None
         """

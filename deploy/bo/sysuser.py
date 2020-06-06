@@ -3,7 +3,7 @@
 """
 ------------------------------------------------
 describe:
-    
+    the db interact services of sysuser
 
 usage:
     

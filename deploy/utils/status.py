@@ -3,10 +3,16 @@
 """
 ------------------------------------------------
 describe:
-    
+    the class of response 
+    type: json
 
 usage:
-    
+    Status(
+           101,
+           'failure',
+           u'Server发生错误，获取失败',
+           {}
+           ).json()
 
 base_info:
     __version__ = "v.10"

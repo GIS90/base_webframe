@@ -3,7 +3,7 @@
 """
 ------------------------------------------------
 describe:
-    
+    the base class of query db
 
 usage:
     

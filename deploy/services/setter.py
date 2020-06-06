@@ -4,7 +4,7 @@
 """
 --------------------------------------------------------------
 describe:
-    
+    the services of setter
 
 base_info:
     __version__ = "v.10"

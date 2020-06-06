@@ -4,7 +4,7 @@
 """
 --------------------------------------------------------------
 describe:
-    setup config
+    setup packages
 
 base_info:
     __version__ = "v.10"
