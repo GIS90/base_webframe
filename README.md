@@ -46,6 +46,9 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
   - dev：etc/dev/supervisor_base_webframe.conf
   - prod：etc/prod/supervisor_base_webframe.conf
 
+把指定环境的supervisor_base_webframe.conf cp到/etc/supervisord.d/include/*下
+项目root根目录下有supervisord.conf文件，用来配置supervisord
+
 > ### 管理gunicorn
 
 负责web项目进程、服务

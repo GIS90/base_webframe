@@ -27,18 +27,16 @@ from flask import (Flask,
                    g,
                    request)
 
+from deploy.config import VERSION, NAME, SECRET_KEY
+from deploy.models.base import get_session
 from deploy.utils.base_class import WebBaseClass
 from deploy.utils.logger import logger as LOG
 from deploy.utils.utils import get_user_id
-
 from deploy.views.employee import employee
 from deploy.views.apis import apis
 from deploy.views.manage import manage
 from deploy.views.home import home
 from deploy.views.setter import setter
-
-from deploy.config import VERSION, NAME, SECRET_KEY
-from deploy.models.base import get_session
 from deploy.services.sysuser import SysUserService
 
 
