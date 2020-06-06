@@ -23,6 +23,7 @@ import yaml
 import inspect
 import logging
 
+
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
@@ -104,8 +105,8 @@ with open(_config_file) as f:
     # LOG
     LOG_DIR = _config_info['LOG']['LOG_DIR'] or LOG_DIR
     if not os.path.exists(LOG_DIR):
-        logger.critical('====== log dir is not exist, exit ======')
-        sys.exit(1)
+        logger.critical('====== log dir is not exist, create %s... ======' % LOG_DIR)
+        os.makedirs(LOG_DIR)
     LOG_LEVEL = _config_info['LOG']['LOG_LEVEL'] or LOG_LEVEL
     LOG_FORMATTER = _config_info['LOG']['LOG_FORMATTER'] or LOG_FORMATTER
     LOG_FILENAME_PREFIX = _config_info['LOG']['LOG_FILENAME_PREFIX'] or LOG_FILENAME_PREFIX

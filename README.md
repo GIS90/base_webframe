@@ -75,9 +75,13 @@ git clone之后修改配置即可运行，在此基础上可进行二次开发�
 
 app.run(host="0.0.0.0", port=11111, debug=True)
 
-执行python wsgi.py，代码目前已写入，处于注释状态
+执行sudo python wsgi.py，代码目前已写入，处于注释状态
+
+通过手动启动的项目为dev开发环境配置，可在deploy/config.py中进行默认调整（mode = os.environ.get('mode') or 'dev'）
 
 如果手动启动模式开启，在gunicorn进行启动，会error: [Errno 48] Address already in use.
+
+注意：启动项目一定要用virtualenv安装的python环境进行启动（source .venv/bin/activate）
 
 > ### 联系方式
 
