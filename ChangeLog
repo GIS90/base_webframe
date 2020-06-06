@@ -1,6 +1,17 @@
 CHANGES
 =======
 
+* add upload image
+* complete html sub\_template
+* add html sub\_template
+* update README.md
+* fix bug: update home page employee count
+* add edit and softdel employee
+* add\_employee add tip
+* bank\_id add number rule
+* add edit func
+* update README.md
+* employee、enums更新&&开发信息管理->新增功能
 * user update sysuser
 * blueprint: tasks update apis
 * add 404&500 page

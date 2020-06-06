@@ -27,7 +27,7 @@ from subprocess import PIPE, Popen
 from platform import python_version
 
 
-MAX_PYTHON_VERSION = '2.7.18'
+MAX_PYTHON_VERSION = '3'
 
 
 class InstallEnv(object):
@@ -92,12 +92,12 @@ Also, make test will automatically use the virtualenv.
             self.die('Command "%s" failed.\n%s' % (' '.join(cmd), output))
         return returncode, output
 
-    def run_command(self, cmd, shell=True, cwd=None):
-        retcode = self._buildin_run_cmd(cmd, shell=shell, check_exit_code=True, cwd=cwd)[0]
+    def run_command(self, cmd, check_exit_code=True, shell=True, cwd=None):
+        retcode = self._buildin_run_cmd(cmd, shell=shell, check_exit_code=check_exit_code, cwd=cwd)[0]
         return 0 if retcode in [0, '0'] else retcode
 
     def check_command_by_which(self, cmd):
-        return True if self.run_command("which %s" % cmd) == 0 \
+        return True if self.run_command("which %s" % cmd, check_exit_code=False) == 0 \
             else False
 
     def _create_virtualenv(self):
@@ -107,12 +107,10 @@ Also, make test will automatically use the virtualenv.
                 _print_message("Virtualenv is installing Success.", t="important")
                 return
             else:
-                _print_message("Virtualenv is installing Failure.", t="error")
+                self.die("ERROR: virtualenv is installing error."
+                         "please install the packages to install virtualenv.")
         else:
             self.die("Pip is not found. please install pip first.")
-
-        self.die("ERROR: virtualenv is installing error."
-                 "please install the packages to install virtualenv.")
 
     def check_or_create_virtualenv(self):
         self._create_virtualenv() if not self.check_command_by_which('virtualenv') \
