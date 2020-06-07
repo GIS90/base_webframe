@@ -297,9 +297,9 @@
 }
 
 .set_user_avatar_submit {
-    margin-top: 5%;
-    margin-left: 40%;
-    margin-bottom: 5px;
+    margin-top: 2%;
+    margin-left: 45%;
+    margin-bottom: 25px;
     width: 100px;
     height: 36px;
     line-height: 18px;
@@ -313,4 +313,10 @@
 
 .set_user_avatar_file {
     float: left
+}
+
+.setter_input{
+    width: 220px;
+    height: 35px;
+    margin-top: -6%;
 }

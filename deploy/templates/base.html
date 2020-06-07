@@ -117,7 +117,7 @@
 
                     <ul class="treeview-menu">
                         <li class="{% if menu.sub == 'user' %}active {% else %} {% endif %}">
-                            <a href="{{ url_for('setter.user_html') }}">
+                            <a href="{{ url_for('setter.user_html', oprtype='info') }}">
                                 <i class="fa {% if menu.sub == 'user' %}fa-circle{% else %}fa-circle-o{% endif %}"></i> 个人中心
                             </a>
                         </li>

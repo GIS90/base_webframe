@@ -56,7 +56,7 @@
                     <div class="col-xs-6 col-md-4">
                         <label style='margin-left:3em;'><span class='info_red'>* </span>电&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp话 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
-                            <input id='phone' type="text" name='phone' maxlength='20' class="info_input"
+                            <input id='phone' type="text" name='phone' maxlength='11' class="info_input"
                                    value='{{ params.em_profile.phone or '' }}' oninput="value=value.replace(/[^\d]/g,'')"
                                    required='required'
                             />
@@ -65,7 +65,7 @@
                     <div class="col-xs-6 col-md-4">
                         <label style='margin-left:3em;'>邮&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp箱 : </label>
                         <span style='position:relative;margin-left:0.5em;'>
-                            <input id='email' type="email" name='email' maxlength='20' class="info_input"
+                            <input id='email' type="email" name='email' maxlength='30' class="info_input"
                                    value='{{ params.em_profile.email or '' }}'
                             />
                         </span>

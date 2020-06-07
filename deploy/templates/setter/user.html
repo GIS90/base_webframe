@@ -37,13 +37,14 @@
                     <div class="set_user_avatar_row">
                         <a href="mailto:{{current_user.email}}"><i class="fa fa-envelope"></i>&nbsp&nbsp&nbsp&nbsp发邮件给Ta</a>
                     </div>
+                    {% if oprtype == 'edit' %}
                     <div class="set_user_avatar_row set_user_avatar_file">
                         <a>
                             <i class="fa fa-picture-o"></i>
                             &nbsp&nbsp&nbsp<input style="float: right" type="file" accept="image/*" name="file" id="file"/>
                         </a>
                     </div>
-                    <input type="button" value="提交" class="set_user_avatar_submit" onclick="submit_avatar()"/>
+                    {% endif %}
                 </div>
             </form>
 
@@ -52,21 +53,49 @@
             <div>
                 <h2>{{current_user.rtx_id}}</h2>
                 <div class="row profile_box_row">
-                    <div class="text-muted set_user_content_label">名称：</div>
-                    <div>{{ current_user.fullname }}</div>
+                    <div class="text-muted set_user_content_label">姓名：</div>
+                    {% if oprtype == 'info' %}
+                         <div>{{ current_user.fullname or '' }}</div>
+                    {% else %}
+                        <input type="text" value="{{ current_user.fullname or ''}}"
+                               maxlength='30' name="setter_fullname" required="required"
+                               class="setter_input" id="setter_fullname"
+                        />
+                    {% endif %}
                 </div>
                 <div class="row profile_box_row">
                     <div class="text-muted set_user_content_label">电话：</div>
-                    <div>{{ current_user.phone }}</div>
+                    {% if oprtype == 'info' %}
+                        <div>{{ current_user.phone or '' }}</div>
+                    {% else %}
+                        <input id='setter_phone' type="text" name='setter_phone' maxlength='11' class="setter_input"
+                               value='{{ current_user.phone or '' }}' oninput="value=value.replace(/[^\d]/g,'')"
+                               required='required'
+                        />
+                    {% endif %}
                 </div>
                 <div class="row profile_box_row">
                     <div class="text-muted set_user_content_label">邮箱：</div>
-                    <div>{{ current_user.email }}</div>
+                    {% if oprtype == 'info' %}
+                        <div>{{ current_user.email or '' }}</div>
+                    {% else %}
+                        <input id='setter_email' type="email" name='setter_email' maxlength='30' class="setter_input"
+                               value='{{ current_user.email or '' }}'
+                        />
+                    {% endif %}
                 </div>
             </div>
         </div>
 
+
+
     </div>
+    <div id="setter_type" style="display:none;">{{ oprtype }}</div>
+    {% if oprtype == 'info' %}
+        <input type="button" value="完善信息" class="set_user_avatar_submit" onclick="edit_info()"/>
+    {% else %}
+        <input type="button" value="提交信息" class="set_user_avatar_submit" onclick="submit_info()"/>
+    {% endif %}
 
 <iframe name="iframe-avatar-post" id="iframe-avatar-post" style="display:none;"></iframe>
 
@@ -114,29 +143,36 @@
         fileReader.readAsDataURL(file);
     });
 
-    function submit_avatar() {
+    function submit_info() {
         // check
         var fileDom = document.getElementById("file");
         var file = fileDom.files[0];
-        if (!file){
-            toastr.warning("请先选择图片", "温馨提示：");
-            return false;
-        }
-        if (!file || file.type.indexOf("image/") < 0) {
+
+        if (file && file.type.indexOf("image/") < 0) {
             toastr.warning("请选择正确图片格式：.jpg、.png等", "温馨提示：");
             return false;
         }
-        var fileSize = (file.size / 1024).toFixed(0);
-        if (fileSize > 1024 * 2) {
-            toastr.warning("上传文件超出限制大小，图片最大为2M", "温馨提示：");
-            return false;
+        if (file){
+            var fileSize = (file.size / 1024).toFixed(0);
+            if (fileSize > 1024 * 2) {
+                toastr.warning("上传文件超出限制大小，图片最大为2M", "温馨提示：");
+                return false;
+            }
         }
 
-        var formData = new FormData();
-        formData.append('avatar', document.getElementById('file').files[0]);
 
+        var fullname = $("#setter_fullname").val();
+        var phone = $("#setter_phone").val();
+        var email = $("#setter_email").val();
+        var formData = new FormData();
+        if (file){
+            formData.append('avatar', document.getElementById('file').files[0]);
+        }
+        formData.append("fullname", fullname);
+        formData.append("phone", phone);
+        formData.append("email", email);
         $.ajax({
-            url: "/setter/upload_image/",
+            url: "/setter/upload_info/",
             type:"post",
             data: formData,
             contentType: false,
@@ -144,7 +180,6 @@
             async:false,
             success: function (result) {
                 var json_result = JSON.parse(result);
-                console.log(json_result)
                 if (json_result.status_id == 100){
                     big = document.getElementById('base_user_image_big');
                     small = document.getElementById('base_user_image_small');
@@ -160,6 +195,10 @@
                 toastr.error("服务端发生故障，上传失败！", "温馨提示：");
             }
         });
+    }
+
+    function edit_info() {
+        window.location.href = "{{ url_for('setter.user_html', oprtype='edit') }}"
     }
 
     function initPage() {

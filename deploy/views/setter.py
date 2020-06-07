@@ -27,27 +27,35 @@ from deploy.services.setter import SetterService
 setter = Blueprint('setter', __name__, url_prefix='/setter')
 
 
-@setter.route('/user/', methods=['GET', 'POST'])
-def user_html():
+@setter.route('/user/<string:oprtype>/', methods=['GET', 'POST'])
+def user_html(oprtype):
     g.menuf = 'setter'
     g.menusub = 'user'
-    return render_template('setter/user.html')
+
+    if isinstance(oprtype, unicode):
+        oprtype = oprtype.encode('utf-8')
+
+    if oprtype not in ['info', 'edit']:
+        oprtype = 'info'
+    res = dict()
+    res['oprtype'] = oprtype
+    return render_template('setter/user.html', oprtype=oprtype)
 
 
-@setter.route('/upload_image/', methods=['POST'])
+@setter.route('/upload_info/', methods=['POST'])
 @timeer
 def upload_image():
     image = request.files.get('avatar')
-    if not image:
-        return Status(
-                200,
-                'failure',
-                u'请先上传图片',
-                {}
-                ).json()
-
     g.menuf = 'setter'
     g.menusub = 'user'
-    LOG.info('%s update image' % get_user_id())
-    return SetterService().upload_image(image)
-
+    try:
+        form = request.form
+        res = SetterService().upload_info(image, form)
+    except Exception as e:
+        LOG.error("setter>upload_info is error: %s" % e)
+        res = Status(101,
+                     'failure',
+                     u'Server发生错误，获取失败',
+                     {}).json()
+    LOG.info('%s update information' % get_user_id())
+    return res
