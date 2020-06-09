@@ -53,6 +53,7 @@
             <div>
                 <h2>{{current_user.rtx_id}}</h2>
                 <div class="row profile_box_row">
+                    <i class="fa fa-user" style="float: left;margin-top: 4px;"></i>
                     <div class="text-muted set_user_content_label">姓名：</div>
                     {% if oprtype == 'info' %}
                          <div>{{ current_user.fullname or '' }}</div>
@@ -64,6 +65,7 @@
                     {% endif %}
                 </div>
                 <div class="row profile_box_row">
+                    <i class="fa fa-phone-square" style="float: left;margin-top: 4px;"></i>
                     <div class="text-muted set_user_content_label">电话：</div>
                     {% if oprtype == 'info' %}
                         <div>{{ current_user.phone or '' }}</div>
@@ -75,6 +77,7 @@
                     {% endif %}
                 </div>
                 <div class="row profile_box_row">
+                    <i class="fa fa-envelope" style="float: left;margin-top: 4px;"></i>
                     <div class="text-muted set_user_content_label">邮箱：</div>
                     {% if oprtype == 'info' %}
                         <div>{{ current_user.email or '' }}</div>

@@ -270,6 +270,7 @@
     float: left;
     font-size: 16px;
     font-weight: bolder;
+    margin-left: 5px;
 }
 
 .space-4 {
@@ -315,8 +316,18 @@
     float: left
 }
 
-.setter_input{
+.setter_input {
     width: 220px;
     height: 35px;
     margin-top: -6%;
+}
+
+.logo-img {
+    float: left;
+    margin-left: .8rem;
+    margin-top: .8rem;
+    max-height: 33px;
+    width: auto;
+    border-radius:50%;
+    box-shadow: 0 2px 2px #FA8258 !important;
 }
