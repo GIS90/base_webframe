@@ -90,10 +90,12 @@ class SetterService(object):
             if not os.path.exists(store_dir):
                 mk_dirs(store_dir)
             image_file.save(os.path.join(store_dir, store_file_name))
+
         try:
             user_mode = self.sysuser_bo.get_user_by_params(get_user_id())
             if db_image:
                 user_mode.image = db_image
+            ret_image = db_image if db_image else user_mode.image
             user_mode.fullname = form.get('fullname')
             user_mode.phone = form.get('phone')
             if form.get('email'):
@@ -112,6 +114,5 @@ class SetterService(object):
                     100,
                     'success',
                     u'信息完善成功！',
-                    {'image': db_image}
+                    {'image': ret_image}
                     ).json()
-

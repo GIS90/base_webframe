@@ -1,7 +1,9 @@
 > ### 项目架构
 
 项目基于python+flask+mysql+gunicorn+supervisor进行搭建的一个web脚手架，架子已经基本搭建起来，备具Restful API、验证session、页面模板等功能
+
 git clone之后修改配置即可运行，在此基础上可进行二次开发，可以前端/后台独立、也可以运用flask的jinja2模板
+
   - python 开发语言，基于python2
   - flask 使用的web框架
   - mysql 数据库

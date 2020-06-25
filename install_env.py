@@ -226,7 +226,7 @@ def _print_message(message, t="default"):
 def main():
     py_version = python_version()
     if py_version > MAX_PYTHON_VERSION:
-        _print_message("Current is high, please use Python2.", t="error")
+        _print_message("Current is high, please use Python2.X.X", t="error")
         os._exit(0)
 
     base_dir = _get_cur_folder()
