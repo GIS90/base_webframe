@@ -57,15 +57,21 @@ def login_in():
         form = request.form
         user_id = form.get('login_user')
         user_pwd = form.get('login_password')
+        if not user_id:
+            return render_template("login.html",
+                                   login_message=u'请输入用户信息（ID、电话、邮箱）')
+        if not user_pwd:
+            return render_template("login.html",
+                                   login_message=u'请输入账号密码')
         is_register_user = SysUserService().get_user_by_params(user_id)
         if not is_register_user:
             return render_template("login.html",
-                                   login_message='账户未注册')
+                                   login_message=u'账户未注册')
         # 支持用户id、phone、email登录
         user = SysUserService().check_user(user_id, user_pwd)
         if not user:
             return render_template("login.html",
-                                   login_message='账号密码不匹配')
+                                   login_message=u'账号密码不匹配')
         session['user_id'] = user_id
         g.menuf = 'index'
         g.menusub = 'index'

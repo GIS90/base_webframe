@@ -1,6 +1,15 @@
 CHANGES
 =======
 
+* fix bug: setter: submit info api
+* add logo image
+* del avatar image
+* optimize: setter.user
+* add comment
+* start dev branch
+* fix bug: run
+* install\_env.py:fix virtualenv version
+* fix bug: install\_env.py
 * add upload image
 * complete html sub\_template
 * add html sub\_template
