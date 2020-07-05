@@ -31,7 +31,7 @@ import inspect
 import logging
 
 
-logging.basicConfig()
+# logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 

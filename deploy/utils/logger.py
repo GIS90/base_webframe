@@ -103,8 +103,12 @@ filename_prefix = LOG_FILENAME_PREFIX
 if not logdir:
     logdir = _get_cur_folder()
 if not os.path.exists(logdir):
-    logger.critical('====== log dir is not exist, exit ======')
-    sys.exit(1)
+    try:
+        os.makedirs(logdir)
+        logger.critical('====== log dir is not exist, create: %s ======' % logdir)
+    except:
+        logger.critical('====== log dir is not exist and create failure, exist: %s ======' % logdir)
+        sys.exit(1)
 if not level:
     level = 'debug'
 # 格式
@@ -117,7 +121,7 @@ log_level = LEVEL.get(level)
 logger.setLevel(level=log_level)
 
 
-# 定义一个RotatingFileHandler，最多备份10个日志文件，每个日志文件最大1M
+# 定义一个RotatingFileHandler，最多备份10个日志文件，每个日志文件最大10M
 log_name = filename_prefix + '_' + _get_now(format="%Y-%m-%d") \
     if filename_prefix and filename_prefix != '-' else _get_now(format="%Y-%m-%d")
 log_file = os.path.join(logdir, (log_name + '.log'))
