@@ -5,64 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>系统登录</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/iCheck/square/blue.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/pace/pace.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/adminlte/css/AdminLTE.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/adminlte/css/skins/skin-blue.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
-    <!--[if lt IE 9]>
-    <script src="plugins/html5shiv.min.js"></script>
-    <script src="plugins/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-    <div class="login-logo">
-        <b>系统登录</b>
+    <div class="body">123123</div>
+    <div class="grad">123123123</div>
+    <div>123123</div>
+    <div class="header">
+        <div><span>员工信息管理</span>系统</div>
     </div>
-    <div class="login-box-body">
-        <p class="login-box-msg">请输入管理员帐户及密码</p>
-        <form id="login" method="post" action="/login/" >
-            <div class="form-group has-feedback">
-                <input id="login_user" name="login_user" class="login_input" type="text" placeholder="支持用户ID、电话、邮箱登录" />
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input id="login_password" name="login_password" class="login_input" type="password" placeholder="输入用户密码" />
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-
+    <br>
+    <div class="login">
+        <form id="login" method="post" action="/login/">
+            <input id="login_user" name="login_user" type="text" placeholder="支持用户ID、电话、邮箱登录"><br>
+            <input id="login_password" name="login_password" type="password" placeholder="输入用户密码"><br>
             {% if login_message %}
             <div class="alert alert-warning login_warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 {{ login_message }}
             </div>
             {%  endif %}
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <button class="login_submit" type="submit" value="submit">登录</button>
-                </div>
-            </div>
+            <button type="submit" value="submit">登录</button>
         </form>
     </div>
+
 </div>
 <script src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/iCheck/icheck.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/pace/pace.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/global.js') }}"></script>
-<script>
-    function initPage() {
-        //初始化iCheck插件
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-
-    }
-</script>
 </body>
 </html>
