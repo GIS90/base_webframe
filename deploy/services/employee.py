@@ -360,8 +360,7 @@ class EmployeeService(object):
         return self.employee_bo.get_empl_by_card_id(str(card_id)) \
             if card_id else {}
 
-    def quit_empl(self, json_args):
-        card_id = json_args.get('card_id')
+    def quit_empl(self, card_id):
         if not card_id:
             return Status(
                     202,
@@ -377,8 +376,8 @@ class EmployeeService(object):
             return Status(
                     203,
                     'failure',
-                    u'quit_empl删除不存在用户：%s' % json_args.get('card_id'),
-                    {}
+                    u'quit_empl删除不存在用户：%s' % card_id,
+                    {'data_id': card_id}
                     ).json()
 
         empl_mode.status = '2'
@@ -389,5 +388,5 @@ class EmployeeService(object):
                     100,
                     'failure',
                     u'%s操作离职成功' % empl_mode.china_name,
-                    {}
+                    {'data_id': card_id}
                     ).json()

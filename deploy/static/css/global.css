@@ -331,3 +331,8 @@
     border-radius:50%;
     box-shadow: 0 2px 2px #FA8258 !important;
 }
+
+.box-header-button {
+    width:80px;
+    margin-right:10px
+}

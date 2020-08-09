@@ -15,6 +15,7 @@ base_info:
     __mail__ = "mingliang.gao@163.com"
 ------------------------------------------------
 """
+import json
 from flask import Blueprint, g, \
     render_template, request
 
@@ -112,12 +113,37 @@ def quit_empl():
         ).json()
 
     try:
-        json = request.get_json()
-        res = EmployeeService().quit_empl(json)
+        req_json = request.get_json()
+        _type = req_json.get('type')
+        if _type in ['one', u'one']:
+            return EmployeeService().quit_empl(req_json.get('data_id'))
+
+        _res = list()
+        data_ids = req_json.get('data_id')
+        for order_id in data_ids:
+            if not order_id:
+                continue
+            res = EmployeeService().quit_empl(order_id)
+            res = json.loads(res)
+            if res.get('status_id') != 100:
+                _res.append(res.get('data').get('data_id'))
+        if len(_res) > 0:
+            return Status(
+                201,
+                'failure',
+                u'订单：%s删除失败' % ','.join(_res),
+                {}
+            ).json()
+
+        return Status(
+            100,
+            'failure',
+            u'订单：%s删除成功' % ','.join(data_ids),
+            {}
+        ).json()
     except Exception as e:
         LOG.error("employee>quit_empl is error: %s" % e)
-        res = Status(101,
-                     'failure',
-                     u'Server发生错误，获取失败',
-                     {}).json()
-    return res
+        return Status(101,
+                      'failure',
+                      u'Server发生错误，获取失败',
+                      {}).json()

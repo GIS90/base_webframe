@@ -19,11 +19,16 @@
         <h3 class="box-title" style="float:left">全职职工浏览</h3>
         <div>（按<span class="info_red">入职时间</span>排序）</div>
     </div>
+    <div class="box-header">
+        <button type="button" class="btn btn-primary waves-effect box-header-button" id="selectsAll" onclick="select_all()" value="all">全选</button>
+        <button type="button" class="btn btn-danger waves-effect box-header-button" id="deletesAll" onclick="del('all')">批量离职</button>
+    </div>
     <!-- /.box-header -->
     <div class="box-body">
         <table id="info_all_employee" class="table table-bordered table-hover table-striped" width="100%">
             <thead>
                 <tr>
+                    <th class='th'><input type="checkbox" class="checkall" /></th>
                     <th>序号</th>
                     <th>中文名称</th>
                     <th>英文名称</th>
@@ -46,6 +51,8 @@
 {% block scripts %}
 
 <script>
+    var click_del = 1;
+
     toastr.options = {
         closeButton: false,
         debug: false,
@@ -71,8 +78,21 @@
             searching: true, //是否开启搜索栏
             ordering: false, //是否启动各个字段的排序功能
             order: [[ 1, "desc"]], //排序方式
-            columnDefs: [
-                {type: 'numeric-comma', targets: [2,3,4,5,6,7,8]}
+            columnDefs : [
+                {//这个就是用来画第一列的小方块多选框的
+                    orderable : false,
+                    className : 'select-checkbox',
+                    targets : 1
+                },
+                {
+                    targets : 0,//代表第0行
+                    searchable : false,
+                    orderable : false,
+                    className : 'dt-body-center',
+                    render : function(data, type, row) {
+                        return '<input class="checkchild" type="checkbox" value="'+data.card_id+'" />';
+                    }
+                }
             ],
             bInfo: true, //是否开启页码底端信息，总条数
             bAutoWidth: true, //是否自动计算列宽
@@ -150,6 +170,11 @@
             },
             columns: [
                 {
+                    "data": null,
+                    "title": "",
+                    "className": "info_td_center"
+                },
+                {
                     "data": "id",
                     "title": "序号",
                     "className": "info_td_center",
@@ -219,9 +244,33 @@
     }
 
     function del(card_id) {
-        var postJsonData = {
-            "card_id": card_id
-        };
+        console.log(this.click_del);
+        if(card_id == 'all'){
+            if(this.click_del != 1){
+                toastr.warning('删除中，请勿重复操作', "温馨提示：");
+                return
+            }
+            var card_id_list = [];
+            $("input[type='checkbox']").each(function(index, element){
+                 if(element.checked){
+                     card_id_list.push(element.value)
+                 }
+            });
+            if(card_id_list.length < 1){
+                toastr.warning('请先选择要删除的数据', "温馨提示：");
+                return
+            }
+            this.click_del = 2;
+            var postJsonData = {
+                "data_id": card_id_list,
+                "type": 'many'
+            };
+        }else{
+            var postJsonData = {
+                "data_id": card_id,
+                "type": 'one'
+            };
+        }
         $.ajax({
             url: "/employee/quit_empl/",
             type: 'POST',
@@ -238,13 +287,35 @@
                 }else{
                     toastr.error(message, "温馨提示：");
                 }
-
+                if(card_id == 'all'){
+                    this.click_del = 1;
+                }
             },
             error: function (result) {
                 console.log('add data is error: '+ result);
                 toastr.error("服务端发生故障，离职失败！", "温馨提示：");
+                if(card_id == 'all'){
+                    this.click_del = 1;
+                }
             }
         });
+    }
+
+    function select_all() {
+        var select_button=document.getElementById('selectsAll');
+        if(select_button.value == 'all'){
+            $("input[type='checkbox']").each(function(index, element){
+              element.checked = true;
+            });
+            select_button.value = 'unall';
+            select_button.innerHTML = '取消全选';
+        }else{
+            $("input[type='checkbox']").each(function(index, element){
+              element.checked = false;
+            });
+            select_button.value = 'all';
+            select_button.innerHTML = '全选';
+        }
     }
 
 </script>
